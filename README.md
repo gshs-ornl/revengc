@@ -16,15 +16,23 @@ library(revengc)
 
 ## Details about `rec()`
 
-The `rec` function will handle 4 different types of input (where area can be any unit of measure):
+ ### Usage
+First note that `rec` has the following format 
+```rec(hhsdata, areadata, hhslowerbound, hhsupperbound, arealowerbound, areaupperbound)``` 
 
- * Case I. hhs average, area average, hhs lower bound, hhs upper bound, area lower bound, and area upper bound
+where a description of each argument is found below 
 
- * Case II. hhs frequency table, area frequency table, hhs lower bound, hhs upper bound, area lower bound, and area upper bound
+* **hhsdata**-This household size value can be a univariate frequency table or numeric value that represents an average. This input could also be a contingency table, but only if the areadata = 0.
 
- * Case III. hhs average or frequency table, area average or frequency table, hhs lower bound, hhs upper bound, area lower bound and area upper bound
+* **areadata**-This area (size of house) value can be a univariate frequency table or numeric value that represents an average. This input could also be a contingency table, but only if the hhsdata = 0. The areadata can be any unit of measure.
+	
+* **hhslowerbound**-This is a numeric value to represent the household size lower bound. This lower bound variable needs to be numeric value >=0.
+	
+* **hhsupperbound**-This is a numeric value to represent the household size upper bound. This upper bound variable cannot be less than the highest category value (e.g. if a table has '>100' then the upper bound cannot be 90).
+	
+* **arealowerbound**-This is a numeric value to represent the area lower bound. This lower bound variable needs to be numeric values >=0.
 
- * Case IV. contingency table (hhs, area) or (area, hhs), hhs lower bound, hhs upper bound, area lower bound, and area upper bound
+* **areaupperbound**-This is a numeric value to represent the area upper bound. This upper bound variable cannot be less than the highest category value (e.g. if a table has '>100' then the upper bound cannot be 90).
 
 ### Bounds
 
@@ -87,24 +95,6 @@ contingencytable<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,
 ```
 
 ## Examples of Applying `rec()` to Census Data
-
-### Usage
-First note that `rec` has the following format 
-```rec(hhsdata, areadata, hhslowerbound, hhsupperbound, arealowerbound, areaupperbound)``` 
-
-where a description of each argument is found below 
-
-* **hhsdata**-This household size value can be a univariate frequency table or numeric value that represents an average. This input could also be a contingency table, but only if the areadata = 0.
-
-* **areadata**-This area (size of house) value can be a univariate frequency table or numeric value that represents an average. This input could also be a contingency table, but only if the hhsdata = 0. The areadata can be any unit of measure.
-	
-* **hhslowerbound**-This is a numeric value to represent the household size lower bound. This lower bound variable needs to be numeric value >=0.
-	
-* **hhsupperbound**-This is a numeric value to represent the household size upper bound. This upper bound variable cannot be less than the highest category value (e.g. if a table has '>100' then the upper bound cannot be 90).
-	
-* **arealowerbound**-This is a numeric value to represent the area lower bound. This lower bound variable needs to be numeric values >=0.
-
-* **areaupperbound**-This is a numeric value to represent the area upper bound. This upper bound variable cannot be less than the highest category value (e.g. if a table has '>100' then the upper bound cannot be 90).
 
 ### Nepal
 The Nepal Living Standards Survey [2] provides averages and a censored table for household size and averages for area of dwelling.  This census data provides an example for Case I and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 20 people and columns ranging from 520 to 620 square feet) for urban Nepal you would run 
