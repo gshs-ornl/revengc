@@ -34,6 +34,7 @@ Ideally, the four bounds should be chosen based off prior knowledge and expert e
 The table(s) for Case II and III has restrictions. The frequency table must be formatted where there are 2 columns with n number of rows.  The categories must be in first column and the frequencies in the second column.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  Both columns should not have a header (header=FALSE).  No words are allowed for censoring.  The only censoring symbols accepted are < and <= (left censoring), - (interval censoring), > and >= and + (right censoring).  A formatted example is below.
 
 <=6 | 11800
+---|---
 7-12 | 57100
 13-19 | 14800
 20+ | 3900
