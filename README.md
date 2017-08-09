@@ -16,8 +16,19 @@ library(revengc)
 
 ## Details about `rec()`
 
+ ### Summarizing four scenarios that can be reverse engineered with `rec`
+ 
+ * Case I. Averages for both hhs and area
+
+ * Case II. Decoupled hhs and area frequency tables
+
+ * Case III. Combination of hhs (area) average and area (hhs) frequency table 
+
+ * Case IV. hhs x area contingency table (censored)
+ 
+
  ### Usage
-First note that `rec` has the following format 
+`rec` has the following format 
 ```
 rec(hhsdata, areadata, hhslowerbound, hhsupperbound, arealowerbound, areaupperbound)
 ``` 
@@ -98,17 +109,6 @@ contingencytable<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,
 ```
 
 ## Examples of Applying `rec()` to Census Data
-
-Before diving into census data examples, let's summarize the cases `rec` can handle
-
- * Case I. hhs average, area average, hhs lower bound, hhs upper bound, area lower bound, and area upper bound
-
- * Case II. hhs frequency table, area frequency table, hhs lower bound, hhs upper bound, area lower bound, and area upper bound
-
- * Case III. hhs average or frequency table, area average or frequency table, hhs lower bound, hhs upper bound, area lower bound and area upper bound
-
- * Case IV. contingency table (hhs, area) or (area, hhs), hhs lower bound, hhs upper bound, area lower bound, and area upper bound
- 
 
 ### Nepal
 The Nepal Living Standards Survey [2] provides averages and a censored table for household size and averages for area of dwelling.  This census data provides an example for Case I and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 20 people and columns ranging from 520 to 620 square feet) for urban Nepal you would run 
