@@ -9,8 +9,6 @@ The main function in the revengc package is called `rec`. This function inputs c
 ## Getting Started
 
 You can install the latest development version from github with
-
-
 ```
 devtools::install_github("GIST-ORNL/revengc")
 ```
@@ -26,20 +24,6 @@ The `rec` function will handle 4 different types of input:
  * Case III. hhs average or frequency table, area average or frequency table, hhs lower bound, hhs upper bound, area lower bound and area upper bound
 
  * Case IV. contingency table (hhs, area) or (area, hhs), hhs lower bound, hhs upper bound, area lower bound, and area upper bound
-=======
-## Details 
-
-
-The main function in the revengc package is called 'rec'.  The 'rec' function will handle 4 different types of input:
-
- -Case 1. hhs average, area average, hhs lower bound, hhs upper bound, area lower bound, and area upper bound
-
- -Case 2. hhs frequency table, area frequency table, hhs lower bound, hhs upper bound, area lower bound, and area upper bound
-
- -Case 3. hhs average or frequency table, area average or frequency table, hhs lower bound, hhs upper bound, area lower bound and area upper bound
-
- -Case 4. contingency table (hhs, area) or (area, hhs), hhs lower bound, hhs upper bound, area lower bound, and area upper bound
-
 
 ### Bounds
 
@@ -50,20 +34,25 @@ Ideally, the four bounds should be chosen based off prior knowledge and expert e
 
 The table(s) for Case II and III has restrictions. The frequency table must be formatted where there are 2 columns with n number of rows.  The categories must be in first column and the frequencies in the second column.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  Both columns should not have a header (header=FALSE).  No words are allowed for censoring.  The only censoring symbols accepted are < and <= (left censoring), - (interval censoring), > and >= and + (right censoring).  A formatted example is below.
 
-| <=6 | 11800 | 
-| 7-12 | 57100 |
-| 13-19 | 14800 |
-| 20+ | 3900 |
+|<=6|11800| 
+|7-12|57100|
+|13-19|14800|
+|20+|3900|
 
 The table for Case IV also has restrictions.  Again, no words are allowed for censoring. Only the censored values of <, <=, -, >, >=, and +  are allowed.  This table works when there is a column header present or absent.  However, the only column header that is allowed has to be the hhs or area category values.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  The inside of this table is the cross tabulation of hhsxarea which are either positive frequency values or percentages. The row and column total marginals have to placed in this table. The top left, top right, and bottom left corners of this table have to be NA or blank, but the bottom right corner can be a total sum value, NA, or blank. This code will transpose a contingency table if given a table with area=rows and hhs=columns, but the output will always be hhs=rows and area=columns. This transpose will only occur under the assuption that the sum of area category value is greater than the sum of household size category value.  Below is a formatted example with percentages as the cross-tabulations, the bottom right corner as a total sum, and the column header as the area category values.
 
-| NA | <20 | 20-30| >30 | NA |
-| <5 | 0.18 | 0.19 | 0.08| 0.45 |
-| 5-9 | 0.13 | 0.08 | 0.12| 0.33 |
-| >=10 | 0.06 | 0.05 | 0.10| 0.21 |
-| NA | 0.38 | 0.32 | 0.31 | 1.00 |
+|NA|<20|20-30|>30|NA|
+|<5|0.18|0.19|0.08|0.45|
+|5-9|0.13|0.08|0.12|0.33|
+|>=10|0.06|0.05|0.10|0.21|
+|NA|0.38|0.32|0.31|1.00|
 
-####Sample datasets
+| Left-aligned | Center-aligned | Right-aligned |
+| :---         |     :---:      |          ---: |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
+
+#### Sample datasets
 Since the format for the tables is strick, we will now show how to format these tables properly using actual census data.  If a user wants to read in a file, the format must look like the following sample datasets: `nepal_hhs`, `hongkong_hhs`, `hongkong_area`, `iran_hhs`, and `indonesia_contingency `.  These datasets are cited in Legal section below and more details can be found in `man/` directory.  Creating tables with R code is possible too.  The following code shows how these sample datasets can be created in R.
 
 ```
@@ -105,7 +94,7 @@ contingency_indonesia<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,
 
 ## Examples of Applying `rec()` to Census Data
 
-###Nepal
+### Nepal
 The Nepal Living Standards Survey [2] provides averages and a censored table for household size and averages for area of dwelling.  This census data provides an example for Case I and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 20 people and columns ranging from 520 to 620 square feet) for urban Nepal you would run 
 
 ```
@@ -116,7 +105,7 @@ rec(nepal_hhs,571.3,1,20,520,620)
 
 ```
 
-###Hong Kong
+### Hong Kong
 The Census and Statistics Department of Hong Kong [1] provides censored frequency tables for hhs and area as well as medians for both variables.  This census data provides an example for Case I, Case II, and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 15 people and columns ranging from 1 to 30 square meters) for sub-divided units in Hong Kong you would run 
 
 ```
@@ -129,7 +118,7 @@ rec(2.0,hongkong_area,1,15,1,30)
 rec(hongkong_hhs,10.3,1,15,1,30)
 ```
 
-###Iran
+### Iran
 For different provices, The Statistical Centre of Iran [4] reports censored tables for household size as well as averages for floor area.  This census data provides an example for Case I and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 10 people and columns ranging from 80 to 130 square meters) for East Azerbayejan (Azerbaijan), Iran you would run 
 
 ```
@@ -139,7 +128,7 @@ rec(3.4,100.5,1,10,80,130)
 rec(iran_hhs,100.5,1,10,80,130)
 ```
 
-###Indonesia
+### Indonesia
 The 2010 Population Census Data - Statistics Indonesia [3] provids over 60 censored contingency tables of Floor Area of Dwelling Unit (m2) x Household Member Size separated by province, urban, and rural.  This census data provides a Case IV example.   To produce a final hhs x area contingency table (rows ranging from 1 to 15 people and columns ranging from 10 to 310 square meters) for Indonesia's Rural Aceh Province you would run 
 
 ```
@@ -148,7 +137,7 @@ rec(indonesia_contingency,0,1,15,10,310)
 rec(0,indonesia_contingency,1,15,10,310)
 ```
 
-##Legal
+## Legal
 
 
 [1] Census and Statistics Department of Hong Kong Special Administrative Region . (2016). \emph{Thematic Household Survey Report - Report No. 60 - Housing conditions of sub-divided units in Hong Kong}.  [Data file]. Retrieved from: <http://www.censtatd.gov.hk/hkstat/sub/sp100.jsp?productCode=C0000091>
