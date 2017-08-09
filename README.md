@@ -133,10 +133,10 @@ rec(0,indonesia_contingency,1,15,10,310)
 
 ## Legal
 
-[1] Census and Statistics Department of Hong Kong Special Administrative Region . (2016). \emph{Thematic Household Survey Report - Report No. 60 - Housing conditions of sub-divided units in Hong Kong}.  [Data file]. Retrieved from: <http://www.censtatd.gov.hk/hkstat/sub/sp100.jsp?productCode=C0000091>
+[1] Census and Statistics Department of Hong Kong Special Administrative Region . (2016). *Thematic Household Survey Report - Report No. 60 - Housing conditions of sub-divided units in Hong Kong*.  [Data file]. Retrieved from: <http://www.censtatd.gov.hk/hkstat/sub/sp100.jsp?productCode=C0000091>
 
-[2] National Planning Commissions Secretariat, Government of Nepal. (2011). \emph{Nepal Living Standards Survey}.  [Data file]. Retrieved from: <http://siteresources.worldbank.org/INTLSMS/Resources/3358986-1181743055198/3877319-1329489437402/Statistical_Report_Vol1.pdf>
+[2] National Planning Commissions Secretariat, Government of Nepal. (2011). *Nepal Living Standards Survey*.  [Data file]. Retrieved from: <http://siteresources.worldbank.org/INTLSMS/Resources/3358986-1181743055198/3877319-1329489437402/Statistical_Report_Vol1.pdf>
 
-[3] Population Census Data - Statistics Indonesia. (2010). \emph{Household by Floor Area of Dwelling Unit and Households Member Size}.  [Data file]. Retrieved from: <http://sp2010.bps.go.id/index.php/site/tabel?wid=1100000000&tid=334&fi1=586&fi2=>
+[3] Population Census Data - Statistics Indonesia. (2010). *Household by Floor Area of Dwelling Unit and Households Member Size*.  [Data file]. Retrieved from: <http://sp2010.bps.go.id/index.php/site/tabel?wid=1100000000&tid=334&fi1=586&fi2=>
 
-[4] The Statistical Centre of Iran. (2011). \emph{Selected Findings of National Population and Housing Census}.  [Data file]. Retrieved from: <https://www.amar.org.ir/Portals/1/Iran/90.pdf>
+[4] The Statistical Centre of Iran. (2011). *Selected Findings of National Population and Housing Census*.  [Data file]. Retrieved from: <https://www.amar.org.ir/Portals/1/Iran/90.pdf>
