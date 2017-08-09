@@ -33,10 +33,10 @@ Ideally, the four bounds should be chosen based off prior knowledge and expert e
 
 The table(s) for Case II and III has restrictions. The frequency table must be formatted where there are 2 columns with n number of rows.  The categories must be in first column and the frequencies in the second column.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  Both columns should not have a header (header=FALSE).  No words are allowed for censoring.  The only censoring symbols accepted are < and <= (left censoring), - (interval censoring), > and >= and + (right censoring).  A formatted example is below.
 
-| <=6 | 11800 |
-| 7-12 | 57100 |
-| 13-19 | 14800 |
-| 20+ | 3900 |
+| <=6      | 11800 |
+| 7-12     | 57100 |
+| 13-19    | 14800 |
+| 20+      | 3900  |
 
 The table for Case IV also has restrictions.  Again, no words are allowed for censoring. Only the censored values of <, <=, -, >, >=, and +  are allowed.  This table works when there is a column header present or absent.  However, the only column header that is allowed has to be the hhs or area category values.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  The inside of this table is the cross tabulation of hhsxarea which are either positive frequency values or percentages. The row and column total marginals have to placed in this table. The top left, top right, and bottom left corners of this table have to be NA or blank, but the bottom right corner can be a total sum value, NA, or blank. This code will transpose a contingency table if given a table with area=rows and hhs=columns, but the output will always be hhs=rows and area=columns. This transpose will only occur under the assuption that the sum of area category value is greater than the sum of household size category value.  Below is a formatted example with percentages as the cross-tabulations, the bottom right corner as a total sum, and the column header as the area category values.
 
