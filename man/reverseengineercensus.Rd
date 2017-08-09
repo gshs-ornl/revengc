@@ -8,7 +8,7 @@ rec(hhsdata, areadata, hhslowerbound, hhsupperbound, arealowerbound,
 \arguments{
 \item{hhsdata}{This household size value can be a univariate frequency table or numeric value that represents an average.  This input could also be a contingency table, but only if the areadata = 0.}
 
-\item{areadata}{This area (size of house) value can be a univariate frequency table or numeric value that represents an average.  This input could also be a contingency table, but only if the hhsdata = 0.}
+\item{areadata}{This area (size of house) value can be a univariate frequency table or numeric value that represents an average.  This input could also be a contingency table, but only if the hhsdata = 0. The areadata can be any unit of measure.}
 
 \item{hhslowerbound}{This is a numeric value to represent the household size lower bound.  This lower bound variable needs to be numeric value >=0.}
 
