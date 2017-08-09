@@ -7,7 +7,7 @@ A wealth of open source information is available that points to building usage i
 
 The main function in `revengc` is called `rec()`.  This function can be used on the following scenarios found in any given census
  
- * Case I. Averages for both hhs and area
+ * Case I. Averages for both household size (hhs) and area
 
  * Case II. Decoupled hhs and area frequency tables
 
@@ -15,7 +15,7 @@ The main function in `revengc` is called `rec()`.  This function can be used on 
 
  * Case IV. hhs x area contingency table (censored)
  
-In short, `rec` inputs censored, decoupled census data and returns an uncensored contingency table with household size as the rows and area as the columns. The rows will range from the household size lower bound to the household size upper bound. The columns will range from the area lower bound to the area upper bound.  **More information behind the mathematics of `rec()` can be found in the `vignettes/` directory.**
+In short, `rec()` inputs censored, decoupled census data and returns an uncensored contingency table with household size as the rows and area as the columns. The rows will range from the household size lower bound to the household size upper bound. The columns will range from the area lower bound to the area upper bound.  **More information behind the mathematics of `rec()` can be found in the `vignettes/` directory.**
  
 ## Getting Started 
  
