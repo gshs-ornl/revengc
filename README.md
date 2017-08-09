@@ -55,40 +55,29 @@ The table for Case IV also has restrictions.  Again, no words are allowed for ce
 Since the format for the tables is strick, we will now show how to format these tables properly using actual census data.  If a user wants to read in a file, the format must look like the following sample datasets: `nepal_hhs`, `hongkong_hhs`, `hongkong_area`, `iran_hhs`, and `indonesia_contingency `.  These datasets are cited in Legal section below and more details can be found in `man/` directory.  Creating tables with R code is possible too.  The following code shows how these sample datasets can be created in R.
 
 ```
-hhsdata_nepal<-cbind(as.character(c("1-2", "3-4", "5-6", "7-8", ">=9")), 
-		      c(16.2, 41.7, 29.0, 9.0, 4.1))
+hhsdata_nepal<-cbind(as.character(c("1-2", "3-4", "5-6", "7-8", ">=9")), c(16.2, 41.7, 29.0, 9.0, 4.1))
 
-hhsdata_hongkong<-cbind(as.character(c("1", "2", "3", ">3")),
-	                c(27600,25600,20900,13500))
+hhsdata_hongkong<-cbind(as.character(c("1", "2", "3", ">3")), c(27600,25600,20900,13500))
 
-areadata_hongkong<-cbind(as.character(c("<7", "7-12", "13-19", ">19")), 
-		     c(11800,57100,14800,3900))
+areadata_hongkong<-cbind(as.character(c("<7", "7-12", "13-19", ">19")), c(11800,57100,14800,3900))
 
-hhsdata_iran<-cbind(as.character(c("1", "2", "3", "4", ">=5")), 
-		     c(7.08,18.29,29.64,27.95,17.04)) 
+hhsdata_iran<-cbind(as.character(c("1", "2", "3", "4", ">=5")), c(7.08,18.29,29.64,27.95,17.04)) 
 
-contingency_indonesia<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,
-		     5408,12748,26506,21486,14018,9165,2658,567,196,78,
-		     7403,20444,44370,36285,23576,15750,4715,994,364,136,
-		     4793,17376,44065,40751,28900,20404,6557,1296,555,228,
-		     2354,11143,32837,33910,26203,19301,6835,1438,618,245,
-		     1060,6038,19256,21298,17774,13864,4656,1039,430,178,
-		     273,2521,9110,11188,9626,7433,2608,578,196,112,
-		     119,1130,4183,5566,5053,3938,1367,318,119,66,
-		     33,388,1707,2367,2328,1972,719,171,68,37,
-		     38,178,1047,1672,1740,1666,757,193,158,164),
-		     nrow=10,ncol=10, byrow=TRUE)
+contingency_indonesia<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,5408,12748,26506,
+	21486,14018,9165,2658,567,196,78,7403,20444,44370,36285,23576,15750,4715,994,364,136,4793,17376,
+	44065,40751,28900,20404,6557,1296,555,228,2354,11143,32837,33910,26203,19301,6835,1438,618,245,
+	1060,6038,19256,21298,17774,13864,4656,1039,430,178,273,2521,9110,11188,9626,7433,2608,578,196,
+	112,119,1130,4183,5566,5053,3938,1367,318,119,66,33,388,1707,2367,2328,1972,719,171,68,37,38,178,
+	1047,1672,1740,1666,757,193,158,164),nrow=10,ncol=10, byrow=TRUE)
 rowmarginal<-apply(contingency_indonesia,1,sum)
 contingency_indonesia<-cbind(contingency_indonesia, rowmarginal)
 colmarginal<-apply(contingency_indonesia,2,sum)
 contingency_indonesia<-rbind(contingency_indonesia, colmarginal)
 row.names(contingency_indonesia)[row.names(contingency_indonesia)=="colmarginal"]<-""
 contingency_indonesia<-data.frame(c("1","2","3","4","5","6", "7", "8","9","10+",NA), 
-contingency_indonesia<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,
-		     contingency_indonesia)
+contingency_indonesia<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,contingency_indonesia)
 colnames(contingency_indonesia)<-c(NA,"<20","20-29","30-39","40-49","50-69","70-99",
-contingency_indonesia<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,
-		     "100-149","150-199","200-299","300+", NA)
+contingency_indonesia<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,"100-149","150-199","200-299","300+", NA)
 ```
 
 ## Examples of Applying `rec()` to Census Data
