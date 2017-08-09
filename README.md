@@ -33,7 +33,7 @@ Ideally, the four bounds should be chosen based off prior knowledge and expert e
 
 ### Tables
 
-The table(s) for Case II and III has restrictions. The frequency table must be formatted where there are 2 columns with n number of rows.  The categories must be in first column and the frequencies in the second column.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  Both columns should not have a header (header=FALSE).  No words are allowed for censoring.  The only censoring symbols accepted are < and <= (left censoring), - (interval censoring), > and >= and + (right censoring).  A formatted example is below.
+The table(s) for Case II and III has restrictions. The frequency table must be formatted where there are 2 columns with n number of rows.  The categories must be in the first column and the frequencies in the second column.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  Both columns should not have a header (header=FALSE).  No words are allowed for censoring.  The only censoring symbols accepted are < and <= (left censoring), - (interval censoring), > and >= and + (right censoring).  A formatted example is below.
 
 
 <=6  | 11800
@@ -54,7 +54,7 @@ The table for Case IV also has restrictions.  Again, no words are allowed for ce
 
 
 ## Sample datasets
-Since the format for the tables is strick, we will now show how to format these tables properly using actual census data.  If a user wants to read in a file, the format must look like the following sample datasets: `nepal_hhs`, `hongkong_hhs`, `hongkong_area`, `iran_hhs`, and `indonesia_contingency `.  These datasets are cited in the Legal section below and more details can be found in `man/` directory.  Creating tables with R code is possible too.  The following code shows how these sample datasets can be created in R.
+Since the format for the tables is strict, we will now show how to format these tables properly using actual census data.  If a user wants to read in a file, the format must look like the following sample datasets: `nepal_hhs`, `hongkong_hhs`, `hongkong_area`, `iran_hhs`, and `indonesia_contingency `.  These datasets are cited in the Legal section below and more details can be found in `man/` directory.  Creating tables with R code is possible too.  The following code shows how these sample datasets can be created in R.
 
 ```
 hhsdata_nepal<-cbind(as.character(c("1-2", "3-4", "5-6", "7-8", ">=9")), c(16.2, 41.7, 29.0, 9.0, 4.1))
@@ -87,6 +87,24 @@ contingencytable<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,
 ```
 
 ## Examples of Applying `rec()` to Census Data
+
+###Usage
+First note that `rec` has the following format 
+```rec(hhsdata, areadata, hhslowerbound, hhsupperbound, arealowerbound, areaupperbound)``` 
+
+where the arguments description is found below 
+
+* **hhsdata**-This household size value can be a univariate frequency table or numeric value that represents an average. This input could also be a contingency table, but only if the areadata = 0.
+
+* **areadata**-This area (size of house) value can be a univariate frequency table or numeric value that represents an average. This input could also be a contingency table, but only if the hhsdata = 0. The areadata can be any unit of measure.
+	
+* **hhslowerbound**-This is a numeric value to represent the household size lower bound. This lower bound variable needs to be numeric value >=0.
+	
+* **hhsupperbound**-This is a numeric value to represent the household size upper bound. This upper bound variable cannot be less than the highest category value (e.g. if a table has '>100' then the upper bound cannot be 90).
+	
+* **arealowerbound**-This is a numeric value to represent the area lower bound. This lower bound variable needs to be numeric values >=0.
+
+* **areaupperbound**-This is a numeric value to represent the area upper bound. This upper bound variable cannot be less than the highest category value (e.g. if a table has '>100' then the upper bound cannot be 90).
 
 ### Nepal
 The Nepal Living Standards Survey [2] provides averages and a censored table for household size and averages for area of dwelling.  This census data provides an example for Case I and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 20 people and columns ranging from 520 to 620 square feet) for urban Nepal you would run 
