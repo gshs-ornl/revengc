@@ -47,9 +47,9 @@ The table for Case IV also has restrictions.  Again, no words are allowed for ce
  -----|------|-------|------|-----
   <5  | 0.18 | 0.19  | 0.08 | 0.45
   5-9 | 0.13 | 0.08  | 0.12 | 0.33
- -----|------|-------|------|-----
- >=10 | 0.06 | 0.05  | 0.10 | 0.21
-  NA  | 0.38 | 0.32  | 0.31 | 1.00
+  >=10| 0.06 | 0.05  | 0.10 | 0.21
+  NA  | 0.38 | 0.32  | 0.31 | 1.00 
+
 
 #### Sample datasets
 Since the format for the tables is strick, we will now show how to format these tables properly using actual census data.  If a user wants to read in a file, the format must look like the following sample datasets: `nepal_hhs`, `hongkong_hhs`, `hongkong_area`, `iran_hhs`, and `indonesia_contingency `.  These datasets are cited in Legal section below and more details can be found in `man/` directory.  Creating tables with R code is possible too.  The following code shows how these sample datasets can be created in R.
