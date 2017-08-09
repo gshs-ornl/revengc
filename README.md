@@ -3,7 +3,7 @@
 A wealth of open source information is available that points to building usage including floor area of building size and likely occupancy. In the case of residential structures, census data provides a number of attributes including two values important to interior density estimation: household size (hhs) and area.  If a national census revealed the raw data or provided a full uncensored contingency table (hhs x area), computing interior density as people/area would be straightforward. However, agencies rarely report this contingency table. Rather hhs and area are often decoupled and reported as separate univariate frequency tables, average values, or a combination of the two.  In addition, the decoupled or contingency tables provided are typically left (<), right (>), and interval (-) censored.  This type of information becomes problematic in estimating interior residential occupancy for numerous reasons.  How can the people/area ratio be calculated when no affiliation between the variables exist?  If a census reports a hhs average of 5.3, then how many houses are there with 1 person, 2 people,..., 10 people?  If a census reports that there are 100 houses in an area of 26-50 square meters, then how many houses are in 26, 27,..., 50 square meters?  The challenge therefore is to infer the people/area ratio when given decoupled and summarized data. The statistical package revengc was designed to reverse engineer censored, decoupled census data into a likely hhs x area uncensored contingency table for estimating interior residential occupancy.
 
 
-The main function in the revengc package is called `rec`. This function inputs censored, decoupled census data and returns an uncensored contingency table with household size as the rows and area as the columns. The rows will range from the household size lower bound to the household size upper bound. The columns will range from the area lower bound to the area upper bound.  **More information behind the mathematics of `rec` can be found in the `vignettes/` directory.**
+The main function in the revengc package is called `rec()`. This function inputs censored, decoupled census data and returns an uncensored contingency table with household size as the rows and area as the columns. The rows will range from the household size lower bound to the household size upper bound. The columns will range from the area lower bound to the area upper bound.  **More information behind the mathematics of `rec()` can be found in the `vignettes/` directory.**
 
 
 ## Getting Started
@@ -16,7 +16,7 @@ library(revengc)
 
 ## Details about `rec()`
 
- ### Scenarios that can be reverse engineered with `rec`
+ ### Scenarios that can be reverse engineered with `rec()`
  
  * Case I. Averages for both hhs and area
 
@@ -28,7 +28,7 @@ library(revengc)
  
 
  ### Usage
-`rec` has the following format 
+`rec()` has the following format 
 ```
 rec(hhsdata, areadata, hhslowerbound, hhsupperbound, arealowerbound, areaupperbound)
 ``` 
