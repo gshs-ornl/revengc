@@ -5,7 +5,6 @@ A wealth of open source information is available that points to building usage i
 
 The main function in the revengc package is called `rec`. This function inputs censored, decoupled census data and returns an uncensored contingency table with household size as the rows and area as the columns. The rows will range from the household size lower bound to the household size upper bound. The columns will range from the area lower bound to the area upper bound.
 
-=======
 ## Getting Started
 
 You can install the latest development version from github with
@@ -34,23 +33,19 @@ Ideally, the four bounds should be chosen based off prior knowledge and expert e
 
 The table(s) for Case II and III has restrictions. The frequency table must be formatted where there are 2 columns with n number of rows.  The categories must be in first column and the frequencies in the second column.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  Both columns should not have a header (header=FALSE).  No words are allowed for censoring.  The only censoring symbols accepted are < and <= (left censoring), - (interval censoring), > and >= and + (right censoring).  A formatted example is below.
 
-|<=6|11800| 
-|7-12|57100|
+|<=6  |11800| 
+|7-12 |57100|
 |13-19|14800|
-|20+|3900|
+|20+  |3900 |
 
 The table for Case IV also has restrictions.  Again, no words are allowed for censoring. Only the censored values of <, <=, -, >, >=, and +  are allowed.  This table works when there is a column header present or absent.  However, the only column header that is allowed has to be the hhs or area category values.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  The inside of this table is the cross tabulation of hhsxarea which are either positive frequency values or percentages. The row and column total marginals have to placed in this table. The top left, top right, and bottom left corners of this table have to be NA or blank, but the bottom right corner can be a total sum value, NA, or blank. This code will transpose a contingency table if given a table with area=rows and hhs=columns, but the output will always be hhs=rows and area=columns. This transpose will only occur under the assuption that the sum of area category value is greater than the sum of household size category value.  Below is a formatted example with percentages as the cross-tabulations, the bottom right corner as a total sum, and the column header as the area category values.
 
-|NA|<20|20-30|>30|NA|
-|<5|0.18|0.19|0.08|0.45|
-|5-9|0.13|0.08|0.12|0.33|
-|>=10|0.06|0.05|0.10|0.21|
-|NA|0.38|0.32|0.31|1.00|
+|  NA  |  <20 |20-30| >30| NA |
+|  <5  | 0.18 | 0.19|0.08|0.45|
+|  5-9 | 0.13 | 0.08|0.12|0.33|
+| >=10 | 0.06 | 0.05|0.10|0.21|
+|  NA  | 0.38 | 0.32|0.31|1.00|
 
-| Left-aligned | Center-aligned | Right-aligned |
-| :---         |     :---:      |          ---: |
-| git status   | git status     | git status    |
-| git diff     | git diff       | git diff      |
 
 #### Sample datasets
 Since the format for the tables is strick, we will now show how to format these tables properly using actual census data.  If a user wants to read in a file, the format must look like the following sample datasets: `nepal_hhs`, `hongkong_hhs`, `hongkong_area`, `iran_hhs`, and `indonesia_contingency `.  These datasets are cited in Legal section below and more details can be found in `man/` directory.  Creating tables with R code is possible too.  The following code shows how these sample datasets can be created in R.
@@ -138,7 +133,6 @@ rec(0,indonesia_contingency,1,15,10,310)
 ```
 
 ## Legal
-
 
 [1] Census and Statistics Department of Hong Kong Special Administrative Region . (2016). \emph{Thematic Household Survey Report - Report No. 60 - Housing conditions of sub-divided units in Hong Kong}.  [Data file]. Retrieved from: <http://www.censtatd.gov.hk/hkstat/sub/sp100.jsp?productCode=C0000091>
 
