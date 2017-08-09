@@ -88,11 +88,11 @@ contingencytable<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,
 
 ## Examples of Applying `rec()` to Census Data
 
-###Usage
+### Usage
 First note that `rec` has the following format 
 ```rec(hhsdata, areadata, hhslowerbound, hhsupperbound, arealowerbound, areaupperbound)``` 
 
-where the arguments description is found below 
+where a description of each argument is found below 
 
 * **hhsdata**-This household size value can be a univariate frequency table or numeric value that represents an average. This input could also be a contingency table, but only if the areadata = 0.
 
