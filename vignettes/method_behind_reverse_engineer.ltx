@@ -1,0 +1,63 @@
+%\VignetteIndexEntry{R packages: LaTeX vignettes}
+%\VignetteAuthor{Henrik Bengtsson}
+%\VignetteKeyword{R}
+%\VignetteKeyword{package}
+%\VignetteKeyword{vignette}
+%\VignetteKeyword{LaTeX}
+%\VignetteEngine{R.rsp::tex}
+
+\documentclass[12pt]{article}
+\usepackage{xspace}
+\usepackage{alltt}
+\usepackage{amsmath,amsthm,amssymb}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-0.5in}
+\addtolength{\textheight}{1in}
+
+\newcommand{\keywords}[1]{\footnotesize{\textbf{Keywords: }#1}\xspace}
+\newcommand{\pkg}[1]{\textsl{#1}\xspace}
+\newcommand{\file}[1]{\textsl{#1}\xspace}
+\newcommand{\code}[1]{\texttt{#1}\xspace}
+\newcommand{\bs}{$\backslash$}
+
+\newenvironment{rspVerbatim}{\vspace{-\parskip}\begin{alltt}\color{blue}}{\end{alltt}}
+\newenvironment{escapeRspVerbatim}{\vspace{-\parskip}\begin{alltt}}{\end{alltt}}
+
+
+\title{Reverse Engineering Censored, Decoupled Residential Data for Population Density Estimation}
+\author{Samantha Duchscherer}
+\date{2017-08-03}
+
+\begin{document}
+    \maketitle
+    \begin{abstract}
+A wealth of open source information is available that points to building usage including floor area of building size and likely occupancy. In the case of residential structures, census data provides a number of attributes including two values important to interior density estimation: household size (hhs) and size of house (area). If a national census revealed the raw data or provided a full contingency table (hhs x area), computing interior density as people/area would be straightforward. However, agencies rarely report this contingency table. Rather hhs and area are often decoupled and reported as separate univariate frequency tables, average values, or a combination of the two.  In addition, tables are typically left, right, and interval censored further complicating the process and obscuring the original relationship between hhs and area. The challenge therefore is to infer what the original data could have been in the given summarized information. A statistical approach was designed to reverse engineer censored, decoupled census data into a likely hhs x area contingency table for estimating interior residential occupancy.
+\\ \\
+ Keywords: census, residential, building, occupancy, bivariate Poisson distribution, censored, decoupled, contingency table
+\\ \\
+This manuscript has been authored by UT-Battelle, LLC under Contract No. DE-AC05-00OR22725 with the U.S. Department of Energy.  The United States Government retains and the publisher, by accepting the article for publication, acknowledges that the United States Government retains a non-exclusive, paid-up, irrevocable, world-wide license to publish or reproduce the published form of this manuscript, or allow others to do so, for United States Government purposes.  The Department of Energy will provide public access to these results of federally sponsored research in accordance with the DOE Public Access Plan (http://energy.gov/downloads/doe-public-access-plan).
+    \end{abstract}
+
+\section{Introduction}
+The interest in population density data continues to grow as open source information increase availability.  There are researchers working towards implementing modeled population densities to associate buildings with sociocultural activities, to distinguish between daytime and nighttime occupancy levels, to approximate natural hazard loss analytics, and to minimize building energy consumption (Stewart et al. 2016).  The main desire of most population studies is to determine the ratio of people/area for a facility (museums, hospitals, schools, etc.).  This statistical approach focuses on residential information containing specific types of uncertainty.  The concentrate on residential data was chosen for numerous reasons.  Primarily, residential information is the most dominant population data in the open source environment.  It encompasses a wide spectrum including Urban, Rural, Multi-Family, Refugee Settlements, and Tents (Stewart et al. 2016).  Furthermore, residential data is recognized as being notorious for reporting key variables used in interior density estimation.  A majority of the time household size (hhs) and size of household (area) are found in any national census.
+\\ \\
+The issue occurs when national census authors may have privy too but normally do not reveal the clear information of people/area.  Reoccurring problems are decoupled variables (e.g. separate averages and frequency tables) and numeric censoring (e.g. area is between 50-100 m\textsuperscript{2} or hhs is listed as $>$ 8 people).  Decoupled variables provides no availability for a cross tabulation between hhs and area (people/area), which is essentially needed in estimating building occupancy.  Also, censoring obscures the true underlying values.  If a census reports a hhs average of 5.3, then we know that average was calculated based off some houses being above and below 5.3.  However, we do not know the exact amount of houses that are above or below 5.3.  Censoring distorts data the same way.  If a census reports that there are 100 houses in an area of 26-50 m\textsuperscript{2}, then we don't know how many houses are in 26m\textsuperscript{2}, 27m\textsuperscript{2},.., 50m\textsuperscript{2}.  This decoupled and summarized information is misleading, thus this model reverse engineers censored, decoupled census data into a likely hhs x area contingency table that more accurately describes interior residential occupancy. The following summarizes the four scenarios that can be reverse engineered.
+\\ \\
+Case I: Averages for both hhs and area \\
+Case II: Decoupled hhs and area frequency tables (possibly censored) \\
+Case III: Combination of hhs (area) average and area (hhs) frequency table (possibly censored) \\
+Case IV: hhs/area contingency table (censored) \\
+
+\section{Literature Review on Poisson}
+The Poisson distribution has interesting and convenient properties that allow a common solution across all case studies considered here.  Jennings et al. (1999) showed that the hhs size follows a univariate Poisson distribution across a number of countries.  However, the area variable is more problematic, and no formal peer reviewed area studies available seem equivalent to Jennings et al. (1999) hhs analysis.  A review of open source information suggests that area varies.  For example, Klaiber (2008) reports a lognormal "appearances" to area data. Some even show data that come close to a normal distribution, such as Shuman (2011).  Also, Takaai et al. (2011) unusually fit house size to an exponential distribution in Tokyo in an unpublished work. Within this context, there is a practical engineering solution to the problem.  Specifically it was decided to model area as a Poisson distribution while fully aware that area is a continuous property.  It is convenient to model it as a Poisson distribution of "counts" square meters for several reasons. First, census data rarely reports area with precision greater than simple integer values for m\textsuperscript{2}.  Considering this a practical matter, it is therefore not unreasonable to think of these data as square meter "counts" It is also known that for large values of the Poisson parameter (e.g. $\lambda$ $>$ 20) the Poisson and the Normal distribution are roughly equivalent. If the underlying continuous distribution for area is Gaussian, the Poisson solution here will still provide a very close approximation. Furthermore, the Poisson distribution has the convenient property that its only parameter ($\lambda$) is equal to the mean of the count data, a commonly encountered value in the open source (Case I and III).  This allows availability to reverse engineer both Cases I, II, III (censored) under a common and consistent statistical model. Finally, by treating square meters as integer counts, the results given by Kawamura (1984) can be utilized.  Kawamura showed that fitting the three parameters of the bivariate Poisson distribution (BP) can be reduced to fitting only the 3\textsuperscript{rd} parameter when the univariate Poisson marginals (hhs, area) are known (or estimated). This provides a practical and consistent approach to reverse engineering Case IV (censored contingency tables) that continues to rely on the Poisson as a common underlying distribution.
+
+
+
+\section{Conclusion}
+Write your conclusion here.
+
+\end{document}
