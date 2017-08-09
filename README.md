@@ -16,7 +16,7 @@ library(revengc)
 
 ## Details about `rec()`
 
- ### Summarizing four scenarios that can be reverse engineered with `rec`
+ ### Scenarios that can be reverse engineered with `rec`
  
  * Case I. Averages for both hhs and area
 
