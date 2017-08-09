@@ -19,7 +19,7 @@ In short, `rec()` inputs censored, decoupled census data and returns an uncensor
  
 ## Getting Started 
  
-You can install the latest development version from github with
+You can install the latest development version from GitHub with
 
 ```
 devtools::install_github("GIST-ORNL/revengc")
