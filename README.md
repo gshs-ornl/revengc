@@ -16,7 +16,7 @@ library(revengc)
 
 ## Details about `rec()`
 
-The `rec` function will handle 4 different types of input:
+The `rec` function will handle 4 different types of input (where area can be any unit of measure):
 
  * Case I. hhs average, area average, hhs lower bound, hhs upper bound, area lower bound, and area upper bound
 
