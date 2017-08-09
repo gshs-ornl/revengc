@@ -18,7 +18,9 @@ library(revengc)
 
  ### Usage
 First note that `rec` has the following format 
-```rec(hhsdata, areadata, hhslowerbound, hhsupperbound, arealowerbound, areaupperbound)``` 
+```
+rec(hhsdata, areadata, hhslowerbound, hhsupperbound, arealowerbound, areaupperbound)
+``` 
 
 where a description of each argument is found below 
 
@@ -34,12 +36,13 @@ where a description of each argument is found below
 
 * **areaupperbound**-This is a numeric value to represent the area upper bound. This upper bound variable cannot be less than the highest category value (e.g. if a table has '>100' then the upper bound cannot be 90).
 
-### Bounds
+
+#### Bounds
 
 Ideally, the four bounds should be chosen based off prior knowledge and expert elicitation, but they can also be selected intuitively with a brute force method.  If the reverse engineering tool outputs a final contingency table with higher probabilities near the edge(s) of the table, then it would make sense to increase the range of the bound(s).  For both the hhs and area variables, this would just involve making the lower bound less, making the upper bound more, or doing a combination of the two.  The opposite holds true as well.  If the final contingency table has very low probabilities near the edge(s) of the table, then a person should decrease the range of the particular bound(s).
 
 
-### Tables
+#### Tables
 
 The table(s) for Case II and III has restrictions. The frequency table must be formatted where there are 2 columns with n number of rows.  The categories must be in the first column and the frequencies in the second column.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  Both columns should not have a header (header=FALSE).  No words are allowed for censoring.  The only censoring symbols accepted are < and <= (left censoring), - (interval censoring), > and >= and + (right censoring).  A formatted example is below.
 
@@ -95,6 +98,17 @@ contingencytable<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,
 ```
 
 ## Examples of Applying `rec()` to Census Data
+
+Before diving into census data examples, let's summarize the cases `rec` can handle
+
+ * Case I. hhs average, area average, hhs lower bound, hhs upper bound, area lower bound, and area upper bound
+
+ * Case II. hhs frequency table, area frequency table, hhs lower bound, hhs upper bound, area lower bound, and area upper bound
+
+ * Case III. hhs average or frequency table, area average or frequency table, hhs lower bound, hhs upper bound, area lower bound and area upper bound
+
+ * Case IV. contingency table (hhs, area) or (area, hhs), hhs lower bound, hhs upper bound, area lower bound, and area upper bound
+ 
 
 ### Nepal
 The Nepal Living Standards Survey [2] provides averages and a censored table for household size and averages for area of dwelling.  This census data provides an example for Case I and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 20 people and columns ranging from 520 to 620 square feet) for urban Nepal you would run 
