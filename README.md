@@ -10,6 +10,7 @@ The main function in the revengc package is called `rec`. This function inputs c
 You can install the latest development version from github with
 ```
 devtools::install_github("GIST-ORNL/revengc")
+library(revengc)
 ```
 
 ## Details about `rec()`
