@@ -43,7 +43,7 @@ The table(s) for Case II and III has restrictions. The frequency table must be f
  20+ |3900
 
 
-The table for Case IV also has restrictions.  Again, no words are allowed for censoring. Only the censored values of <, <=, -, >, >=, and +  are allowed.  This table works when there is a column header present or absent.  However, the only column header that is allowed has to be the hhs or area category values.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  The inside of this table is the cross tabulation of hhsxarea which are either positive frequency values or percentages. The row and column total marginals have to placed in this table. The top left, top right, and bottom left corners of this table have to be NA or blank, but the bottom right corner can be a total sum value, NA, or blank. This code will transpose a contingency table if given a table with area=rows and hhs=columns, but the output will always be hhs=rows and area=columns. This transpose will only occur under the assuption that the sum of area category value is greater than the sum of household size category value.  Below is a formatted example with percentages as the cross-tabulations, the bottom right corner as a total sum, and the column header as the area category values.
+The table for Case IV also has restrictions.  Again, no words are allowed for censoring. Only the censored values of <, <=, -, >, >=, and +  are allowed.  This table works when there is a column header present or absent.  However, the only column header that is allowed has to be the hhs or area category values.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  The inside of this table is the cross tabulation of hhs x area which are either positive frequency values or percentages. The row and column total marginals have to placed in this table. The top left, top right, and bottom left corners of this table have to be NA or blank, but the bottom right corner can be a total sum value, NA, or blank. This code will transpose a contingency table if given a table with area=rows and hhs=columns, but the output will always be hhs=rows and area=columns. This transpose will only occur under the assuption that the sum of area category value is greater than the sum of household size category value.  Below is a formatted example with percentages as the cross-tabulations, the bottom right corner as a total sum, and the column header as the area category values.
 
   NA | <20 | 20-30 | >30 | NA 
  -----|------|-------|------|-----
@@ -131,7 +131,7 @@ rec(hongkong_hhs,10.3,1,15,1,30)
 ```
 
 ### Iran
-For different provices, The Statistical Centre of Iran [4] reports censored tables for household size as well as averages for floor area.  This census data provides an example for Case I and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 10 people and columns ranging from 80 to 130 square meters) for East Azerbayejan (Azerbaijan), Iran you would run 
+For different proviences, The Statistical Centre of Iran [4] reports censored tables for household size as well as averages for floor area.  This census data provides an example for Case I and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 10 people and columns ranging from 80 to 130 square meters) for East Azerbayejan (Azerbaijan), Iran you would run 
 
 ```
 #Case I
