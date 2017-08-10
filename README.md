@@ -19,7 +19,7 @@ In short, `rec()` inputs censored, decoupled census data and returns an uncensor
  
 ## Getting Started 
  
-You can install the latest development version from GitHub with
+You can install the latest development version from github with
 
 ```
 devtools::install_github("GIST-ORNL/revengc")
@@ -66,7 +66,7 @@ The table(s) for Case II and III has restrictions. The frequency table must be f
  20+ |3900
 
 
-The table for Case IV also has restrictions.  Again, no words are allowed for censoring. Only the censored values of <, <=, -, >, >=, and +  are allowed.  This table works when there is a column header present or absent.  However, the only column header that is allowed has to be the hhs or area category values.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  The inside of this table is the cross tabulation of hhs x area which are either positive frequency values or percentages. The row and column total marginals have to placed in this table. The top left, top right, and bottom left corners of this table have to be NA or blank, but the bottom right corner can be a total sum value, NA, or blank. This code will transpose a contingency table if given a table with area=rows and hhs=columns, but the output will always be hhs=rows and area=columns. This transpose will only occur under the assuption that the sum of area category value is greater than the sum of household size category value.  Below is a formatted example with percentages as the cross-tabulations, the bottom right corner as a total sum, and the column header as the area category values.
+The table for Case IV also has restrictions.  Again, no words are allowed for censoring. Only the censored values of <, <=, -, >, >=, and +  are allowed.  This table works when there is a column header present or absent.  However, the only column header that is allowed has to be the hhs or area category values.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  The inside of this table is the cross tabulation of hhs x area which are either positive frequency values or percentages. The row and column total marginals have to be in this table. The top left, top right, and bottom left corners of this table have to be NA or blank, but the bottom right corner can be a total sum value, NA, or blank. This code will transpose a contingency table if given a table with area=rows and hhs=columns, but the output will always be hhs=rows and area=columns. This transpose will only occur under the assumption that the sum of area category value is greater than the sum of household size category value.  Below is a formatted example with percentages as the cross-tabulations, the bottom right corner as a total sum, and the column header as the area category values.
 
   NA | <20 | 20-30 | >30 | NA 
  -----|------|-------|------|-----
@@ -136,7 +136,7 @@ rec(hongkong_hhs,10.3,1,15,1,30)
 ```
 
 ### Iran
-For different proviences, The Statistical Centre of Iran [4] reports censored tables for household size as well as averages for floor area.  This census data provides an example for Case I and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 10 people and columns ranging from 80 to 130 square meters) for East Azerbayejan (Azerbaijan), Iran you would run 
+For different provinces, The Statistical Centre of Iran [4] reports censored tables for household size as well as averages for floor area.  This census data provides an example for Case I and Case III.  To produce a final hhs x area contingency table (rows ranging from 1 to 10 people and columns ranging from 80 to 130 square meters) for East Azerbayejan (Azerbaijan), Iran you would run 
 
 ```
 #Case I
@@ -146,7 +146,7 @@ rec(iran_hhs,100.5,1,10,80,130)
 ```
 
 ### Indonesia
-The 2010 Population Census Data - Statistics Indonesia [3] provids over 60 censored contingency tables of Floor Area of Dwelling Unit (m2) x Household Member Size separated by province, urban, and rural.  This census data provides a Case IV example.   To produce a final hhs x area contingency table (rows ranging from 1 to 15 people and columns ranging from 10 to 310 square meters) for Indonesia's Rural Aceh Province you would run 
+The 2010 Population Census Data - Statistics Indonesia [3] provides over 60 censored contingency tables of Floor Area of Dwelling Unit (m2) x Household Member Size separated by province, urban, and rural.  This census data provides a Case IV example.   To produce a final hhs x area contingency table (rows ranging from 1 to 15 people and columns ranging from 10 to 310 square meters) for Indonesia's Rural Aceh Province you would run 
 
 ```
 #Case IV
@@ -156,10 +156,10 @@ rec(0,indonesia_contingency,1,15,10,310)
 
 ## Legal
 
-[1] Census and Statistics Department of Hong Kong Special Administrative Region . (2016). *Thematic Household Survey Report - Report No. 60 - Housing conditions of sub-divided units in Hong Kong*.  [Data file]. Retrieved from: <http://www.censtatd.gov.hk/hkstat/sub/sp100.jsp?productCode=C0000091>
+[1] Census and Statistics Department of Hong Kong Special Administrative Region . (2016). *Thematic Household Survey Report - Report No. 60 - Housing conditions of sub-divided units in Hong Kong*.  Retrieved from: <http://www.censtatd.gov.hk/hkstat/sub/sp100.jsp?productCode=C0000091>
 
-[2] National Planning Commissions Secretariat, Government of Nepal. (2011). *Nepal Living Standards Survey*.  [Data file]. Retrieved from: <http://siteresources.worldbank.org/INTLSMS/Resources/3358986-1181743055198/3877319-1329489437402/Statistical_Report_Vol1.pdf>
+[2] National Planning Commissions Secretariat, Government of Nepal. (2011). *Nepal Living Standards Survey*. Retrieved from: <http://siteresources.worldbank.org/INTLSMS/Resources/3358986-1181743055198/3877319-1329489437402/Statistical_Report_Vol1.pdf>
 
-[3] Population Census Data - Statistics Indonesia. (2010). *Household by Floor Area of Dwelling Unit and Households Member Size*.  [Data file]. Retrieved from: <http://sp2010.bps.go.id/index.php/site/tabel?wid=1100000000&tid=334&fi1=586&fi2=>
+[3] Population Census Data - Statistics Indonesia. (2010). *Household by Floor Area of Dwelling Unit and Households Member Size*. Retrieved from: <http://sp2010.bps.go.id/index.php/site/tabel?wid=1100000000&tid=334&fi1=586&fi2=>
 
-[4] The Statistical Centre of Iran. (2011). *Selected Findings of National Population and Housing Census*.  [Data file]. Retrieved from: <https://www.amar.org.ir/Portals/1/Iran/90.pdf>
+[4] The Statistical Centre of Iran. (2011). *Selected Findings of National Population and Housing Census*.  Retrieved from: <https://www.amar.org.ir/Portals/1/Iran/90.pdf>
