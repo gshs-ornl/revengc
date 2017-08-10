@@ -8,7 +8,7 @@ rec(hhsdata, areadata, hhslowerbound, hhsupperbound, arealowerbound,
 \arguments{
 \item{hhsdata}{This household size value can be a univariate frequency table or numeric value that represents an average.  This input could also be a contingency table, but only if the areadata = 0.}
 
-\item{areadata}{This area (size of house) value can be a univariate frequency table or numeric value that represents an average.  This input could also be a contingency table, but only if the hhsdata = 0. The areadata can be any unit of measure.}
+\item{areadata}{This area (size of house) value can be a univariate frequency table or numeric value that represents an average.  This input could also be a contingency table, but only if the hhsdata = 0.  The areadata can be any unit of measure.}
 
 \item{hhslowerbound}{This is a numeric value to represent the household size lower bound.  This lower bound variable needs to be numeric value >=0.}
 
@@ -45,7 +45,7 @@ Ideally, the four bounds should be chosen based off prior knowledge and expert e
 
 \strong{Tables:}
 
-The table(s) for Case II and III has restrictions. The frequency table must be formatted where there are two columns with n number of rows.  The categories must be in first column and the frequencies in the second column.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  Both columns should not have a header (header=FALSE).  No words are allowed for censoring.  The only censoring symbols accepted are < and <= (left censoring), - (interval censoring), > and >= and + (right censoring).  A formatted example is below.
+The table(s) for Case II and III has restrictions. The frequency table must be formatted where there are two columns with n number of rows.  The categories must be in the first column and the frequencies in the second column.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  Both columns should not have a header (header=FALSE).  No words are allowed for censoring.  The only censoring symbols accepted are < and <= (left censoring), - (interval censoring), > and >= and + (right censoring).  A formatted example is below.
 
 \tabular{cc}{
     <=6\tab 11800 \cr
@@ -54,7 +54,7 @@ The table(s) for Case II and III has restrictions. The frequency table must be f
     20+\tab 3900 \cr
   }
 
-The table for Case IV also has restrictions.  Again, no words are allowed for censoring. Only the censored values of <, <=, -, >, >=, and +  are allowed.  This table works when there is a column header present or absent.  However, the only column header that is allowed has to be the hhs or area category values.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  The inside of this table is the cross tabulation of hhsxarea which are either positive frequency values or percentages. The row and column total marginals have to placed in this table. The top left, top right, and bottom left corners of this table have to be NA or blank, but the bottom right corner can be a total sum value, NA, or blank. This code will transpose a contingency table if given a table with area=rows and hhs=columns, but the output will always be hhs=rows and area=columns. This transpose will only occur under the assuption that the sum of area category value is greater than the sum of household size category value.  Below is a formatted example with percentages as the cross-tabulations, the bottom right corner as a total sum, and the column header as the area category values.
+The table for Case IV also has restrictions.  Again, no words are allowed for censoring. Only the censored values of <, <=, -, >, >=, and +  are allowed.  This table works when there is a column header present or absent.  However, the only column header that is allowed has to be the hhs or area category values.  Row names should never be placed in this table, the default name should always be 1:n where n is number of rows in the table.  The inside of this table is the cross tabulation of hhs x area which are either positive frequency values or percentages. The row and column total marginals have to be in this table. The top left, top right, and bottom left corners of this table have to be NA or blank, but the bottom right corner can be a total sum value, NA, or blank. This code will transpose a contingency table if given a table with area=rows and hhs=columns, but the output will always be hhs=rows and area=columns. This transpose will only occur under the assumption that the sum of area category value is greater than the sum of household size category value.  Below is a formatted example with percentages as the cross-tabulations, the bottom right corner as a total sum, and the column header as the area category values.
 
   \tabular{ccccc}{
     NA \tab <20 \tab 20-30 \tab >30\tab NA\cr
@@ -108,7 +108,7 @@ The table for Case IV also has restrictions.  Again, no words are allowed for ce
   rec(iran_hhs,100.5,1,10,80,130)
 
 #Example found in the Population Census Data - Statistics Indonesia (2010)
-#A censored contingency table is provided for rural Aceh Provice, Indonesia (square meters)
+#A censored contingency table is provided for rural Aceh Province, Indonesia (square meters)
 
   #Would create table in R by
   contingencytable<-matrix(c(6185,9797,16809,11126,6156,3637,908,147,69,4,
@@ -137,7 +137,7 @@ The table for Case IV also has restrictions.  Again, no words are allowed for ce
 
   #Would read in a csv file as
   #contingencytable<-read.csv("filename.csv", row.names = NULL, header= TRUE, check.names=FALSE)
-  #Using read.csv makes the table for rural Aceh Provice, Indonesia look like the following
+  #Using read.csv makes the table for rural Aceh Province, Indonesia look like the following
   rec(indonesia_contingency,0,1,15,10,310)
 
 }

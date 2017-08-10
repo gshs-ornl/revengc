@@ -8,7 +8,7 @@ A 2016 censored, univariate frequency table containing hhs for 87600 sub-divided
 \usage{hongkong_hhs}
 \source{Thematic Household Survey Report - Report No. 60 - Housing conditions of sub-divided units in Hong Kong, 2016, page 31.}
 \references{
-Census and Statistics Department of Hong Kong Special Administrative Region . (2016). \emph{Thematic Household Survey Report - Report No. 60 - Housing conditions of sub-divided units in Hong Kong}.  [Data file]. Retrieved from: http://www.censtatd.gov.hk/hkstat/sub/sp100.jsp?productCode=C0000091
+Census and Statistics Department of Hong Kong Special Administrative Region . (2016). \emph{Thematic Household Survey Report - Report No. 60 - Housing conditions of sub-divided units in Hong Kong}.  Retrieved from: http://www.censtatd.gov.hk/hkstat/sub/sp100.jsp?productCode=C0000091
 }
 \keyword{datasets}
 

@@ -8,7 +8,7 @@ A 2010 censored contingency table containing household size and area (meters squ
 \usage{indonesia_contingency}
 \source{Population Census Data - Statistics Indonesia, 2010}
 \references{
-Population Census Data - Statistics Indonesia. (2010). \emph{Household by Floor Area of Dwelling Unit and Households Member Size}.  [Data file]. Retrieved from: http://sp2010.bps.go.id/index.php/site/tabel?wid=1100000000&tid=334&fi1=586&fi2=
+Population Census Data - Statistics Indonesia. (2010). \emph{Household by Floor Area of Dwelling Unit and Households Member Size}.  Retrieved from: http://sp2010.bps.go.id/index.php/site/tabel?wid=1100000000&tid=334&fi1=586&fi2=
 }
 \keyword{datasets}
 
