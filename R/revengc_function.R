@@ -1279,4 +1279,4 @@ rec<-function (hhsdata,areadata,hhslowerbound,hhsupperbound,arealowerbound,areau
   #return error if user has wrong input
   if (exists("final")==FALSE) stop('ERROR: Check input!')
   return(final)
-   } #end rec function
+} #end rec function

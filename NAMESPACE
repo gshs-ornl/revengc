@@ -1,2 +1,3 @@
 exportPattern("^[[:alpha:]]+")
 import(stringr)
+importFrom("stats", "dpois", "na.omit", "optim", "ppois", "runif")

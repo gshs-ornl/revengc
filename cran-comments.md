@@ -1,23 +1,28 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* added single quote software names such as 'revengc' in the Description field
+
+* added quickly running examples < 5 sec outside of \dontrun{} 
+
 ## Test environments
 * local OS X install, R 3.2.4
 * ubuntu 12.04 (on travis-ci), R 3.2.4
 * win-builder (devel and release)
 
 ## R CMD check results
+There were no ERRORs or WARNINGs. 
 
-0 errors | 0 warnings | 1 note
+There was 1 NOTE:
 
-* This is a new release.
+* checking CRAN incoming feasibility ... NOTE
+  Note: I have checked that the submission actually comes from the maintainer: 'Samantha Duchscherer <sam.duchscherer@gmail.com>'
 
-## Reverse dependencies
+## Comment on possibly mis-spelled words in DESCRIPTION
 
-This is a new release, so there are no reverse dependencies.
+I use 'hhs' as an acronym for 'household size'.  'revengc' is my package name that I have now put in quotes.  'univariate' is not misspelled. 
 
----
+## Comment on examples inside \dontrun{}
 
-* I have run R CMD check on the NUMBER downstream dependencies.
-  (Summary at ...). 
-  
-* FAILURE SUMMARY
+Added \dontrun{} on rec(indonesia_contingency,0,1,15,10,310) because this gives same results as rec(contingencytable,0,1,15,10,310).
 
-* All revdep maintainers were notified of the release on RELEASE DATE.

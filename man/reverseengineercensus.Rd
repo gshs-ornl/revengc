@@ -69,43 +69,47 @@ The table for Case IV also has restrictions.  Again, no words are allowed for ce
 #Example found in the Nepal Living Standards Survey (2011)
 #An average household size and an average area (square feet) are provided for urban Nepal
 
-  rec(4.4,571.3,1,20,520,620)
+  nepal_results1<-rec(4.4,571.3,1,20,520,620)
 
   #A table for urban Nepal is also listed in this census
-  #Using read.csv makes the tables for urban Nepal look like the following
-  nepal_hhs
-  rec(nepal_hhs,571.3,1,20,520,620)
+  #Would read in the a csv file as
+  #nepal_hhs<-read.csv("filename.csv",row.names=NULL,header=FALSE,check.names=FALSE)
+  #Using a read csv file for urban Nepal look like the following
+  nepal_results2<-rec(nepal_hhs,571.3,1,20,520,620)
+
+
 
 #Example found in the Census and Statistics Department of Hong Kong (2016)
 #Focusing on 87,600 sub-divided Hong Kong units
 #A table for household size and a table for area (square meters) are provided
 
   #Would create tables in R by
-  hhsdata<-cbind(as.character(c("1", "2", "3", ">3")), c(27600,25600,20900,13500))
-  areadata<-cbind(as.character(c("<7", "7-12", "13-19", ">19")), c(11800,57100,14800,3900))
-  rec(hhsdata,areadata,1,15,1,30)
+  hhs_hongkong<-cbind(as.character(c("1", "2", "3", ">3")), c(27600,25600,20900,13500))
+  area_hongkong<-cbind(as.character(c("<7", "7-12", "13-19", ">19")), c(11800,57100,14800,3900))
+  hongkong_results<-rec(hhs_hongkong,area_hongkong,1,15,1,30)
 
   #Would read in the two csv file as
-  #hhsdata<-read.csv("filename.csv", row.names = NULL, header= FALSE, check.names=FALSE)
-  #areadata<-read.csv("filename.csv", row.names = NULL, header= FALSE, check.names=FALSE)
-  #Using read.csv makes the tables for Hong Kong look like the following
-  hongkong_hhs
-  hongkong_area
-  rec(hongkong_hhs,hongkong_area,1,15,1,30)
+  #hongkong_hhs<-read.csv("filename.csv",row.names=NULL,header=FALSE,check.names=FALSE)
+  #hongkong_area<-read.csv("filename.csv",row.names=NULL,header=FALSE,check.names=FALSE)
+  #Using a read csv file for Hong Kong looks like the following
+  hongkong_results<-rec(hongkong_hhs,hongkong_area,1,15,1,30)
+
+
 
 #Example found in the Statistical Centre of Iran (2011)
 #Focusing on East Azerbayejan (Azerbaijan), Iran
 #A table for household size and an average for area (square meters) area are provided
 
   #Would create table in R by
-  hhsdata<-cbind(as.character(c("1", "2", "3", "4", ">=5")), c(7.08,18.29,29.64,27.95,17.04))
-  rec(hhsdata,100.5,1,10,80,130)
+  hhs_iran<-cbind(as.character(c("1", "2", "3", "4", ">=5")), c(7.08,18.29,29.64,27.95,17.04))
+  iran_results<-rec(hhs_iran,100.5,1,10,80,130)
 
   #Would read in a csv file as
-  #hhsdata<-read.csv("filename.csv", row.names = NULL, header= FALSE, check.names=FALSE)
-  #Using read.csv makes the table for East Azerbayejan look like the following
-  iran_hhs
-  rec(iran_hhs,100.5,1,10,80,130)
+  #iran_hhs<-read.csv("filename.csv",row.names=NULL,header=FALSE,check.names=FALSE)
+  #Using a read csv file for East Azerbayejan looks like the following
+  iran_results<-rec(iran_hhs,100.5,1,10,80,130)
+  
+
 
 #Example found in the Population Census Data - Statistics Indonesia (2010)
 #A censored contingency table is provided for rural Aceh Province, Indonesia (square meters)
@@ -131,16 +135,18 @@ The table for Case IV also has restrictions.  Again, no words are allowed for ce
   colnames(contingencytable)<-c(NA,"<20","20-29","30-39","40-49","50-69","70-99",
                                 "100-149","150-199","200-299","300+", NA)
 
-  #These have the same output
-  rec(contingencytable,0,1,15,10,310)
-  rec(0,contingencytable,1,15,10,310)
-
+  
+  #Note rec(contingencytable,0,1,15,10,310) == rec(0,contingencytable,1,15,10,310)
+  indonesia_results<-rec(contingencytable,0,1,15,10,310)
+  
+\dontrun{
   #Would read in a csv file as
-  #contingencytable<-read.csv("filename.csv", row.names = NULL, header= TRUE, check.names=FALSE)
-  #Using read.csv makes the table for rural Aceh Province, Indonesia look like the following
-  rec(indonesia_contingency,0,1,15,10,310)
-
+  #indonesia_contingency<-read.csv("filename.csv",row.names=NULL,header=TRUE,check.names=FALSE)
+  #Using a read csv for rural Aceh Province, Indonesia looks like the following
+  indonesia_results<-rec(indonesia_contingency,0,1,15,10,310)
 }
+}
+
 \keyword{Poisson}
 \keyword{bivariate}
 \keyword{building}
