@@ -26,6 +26,13 @@ devtools::install_github("GIST-ORNL/revengc")
 library(revengc)
 ```
 
+or the the latest release version from CRAN with
+```
+install.packages("revengc")
+library(revengc)
+```
+
+
 ## Details about `rec()`
 
  ### Usage
