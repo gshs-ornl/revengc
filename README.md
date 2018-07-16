@@ -113,10 +113,9 @@ contingencytable<-matrix(c(.18, .13, .07, .19, .08, .05, .08, .12, .10), nrow = 
   NA | <=19 | 20-30 | >=31 | NA 
  -----|------|-------|------|-----
   <5 | 0.18 |0.19 | 0.08 | 0.45
-  5I9 | 0.13 |0.08 | 0.12 | 0.33
-  >9 | 0.07 |0.05 | 0.10 | 0.22
-  NA | 0.38 |0.32 | 0.30 | 1.00 
-
+  5-9 | 0.13 |0.08 | 0.12 | 0.33
+  >9 | 0.07 | 0.05 | 0.10 | 0.22
+  NA | 0.38 | 0.32 | 0.30 | 1.00 
 
 ### quasipoisson_phi
 In a Poisson distribution, the variance equals the mean.  To combat overdispersion, this function considers the option where the variance is proportional to the mean by a scalar value of phi.  This changes Poisson to Quasi-Poisson.  
