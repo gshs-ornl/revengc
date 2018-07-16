@@ -106,15 +106,15 @@ contingencytable<-matrix(c(.18, .13, .07, .19, .08, .05, .08, .12, .10), nrow = 
   colmarginal<-apply(contingencytable,2,sum)
   contingencytable<-rbind(contingencytable, colmarginal)
   row.names(contingencytable)[row.names(contingencytable)=="colmarginal"]<-""
-  contingencytable<-data.frame(c("<5", "5I9", ">9", NA), contingencytable)
+  contingencytable<-data.frame(c("<5", "5I9", "G9", NA), contingencytable)
   colnames(contingencytable)<-c(NA,"<=19","20-30",">=31", NA)
 ```
 
   NA | <=19 | 20-30 | >=31 | NA 
  -----|------|-------|------|-----
   <5 | 0.18 |0.19 | 0.08 | 0.45
-  5-9 | 0.13 |0.08 | 0.12 | 0.33
-  >9 | 0.07 | 0.05 | 0.10 | 0.22
+  5I9 | 0.13 |0.08 | 0.12 | 0.33
+  G9 | 0.07 | 0.05 | 0.10 | 0.22
   NA | 0.38 | 0.32 | 0.30 | 1.00 
 
 ### quasipoisson_phi
