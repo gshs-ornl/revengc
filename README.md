@@ -2,7 +2,8 @@
 
 An issue occurs when authors may have privy too but normally do not reveal clear information.  Decoupled variables (e.g. separate averages) and numeric censoring (e.g. between ages 10-15) are reoccurring instances found in areas ranging from demographic and epidemiological data to ecological inference problems.  Decoupled variables provide no availability for cross tabulations while censoring obscures the true underlying values.  The revengc R package was developed to reverse engineer this unclear information that is continually reported by many well-established organizations (e.g. World Health Organization (WHO), Centers for Disease Control and Prevention (CDC),  The World Bank, and various national censuses).  There are two main functions in revengc and both fit data to a Poisson or Quasi-Poisson distribution.  The estimated_lambda function takes a univariate censored frequency table and approximates its lambda (average) value.  The rec function estimates an uncensored bivariate table from decoupled and summarized arguments.
 
-It is recommended for a user to read the vignettes for more information.  In short, a censored frequency table is fit to a Poisson or Quasi-Poisson truncated distribution using a likelihood function customized to censored data and estimated_lambda outputs the lambda value that maximizes the function. rec handles the following four cases:   
+## Overview
+The workflow for estimated_lambda is straightfoward.  A censored frequency table is fit to a Poisson or Quasi-Poisson truncated distribution using a likelihood function customized to censored data and estimated_lambda outputs the lambda value that maximizes the function. However, rec is more complex.  rec handles four cases and a summary workflow for each is provided below.  It is highly recommended for a user to read the vignettes for more information.     
 
 * Case I. When provided an average for both X and Y, the averages represent lambda values.  These lambdas create right-shifted and right-truncated Poisson or Quasi-Poisson X and Y probability densities for uncensored vectors ranging from Xlowerbound:Xupperbound and Ylowerbound:Yupperbound, respectively.  The Xlowerbound:Xupperbound vector with its corresponding normalized density values represents the new row marginal.  The Ylowerbound:Yupperbound vector with its corresponding normalized density values represents the new column marginal.  This is a decoupled case, and thus the seed (initial cross tabulation matrix to be updated) is a matrix of ones.  The mipfp R package then estimates cross tabulations with a selected seed estimation method, the new uncensored marginals, and the seed matrix.  The final result is an uncensored contingency table with rows ranging from Xlowerbound:Xupperbound and columns ranging from Ylowerbound:Yupperbound.  
 
@@ -32,7 +33,6 @@ library(revengc)
 `estimated_lambda()` has the following format 
 ```
 estimated_lambda(censoredtable, upperbound, quasipoisson_phi)
-
 ``` 
 
 where a description of each argument is found below 
@@ -75,7 +75,7 @@ where a description of each argument is found below
 
 ## Details
 
-###Tables
+### Tables
 The univariate frequency table, which can be a data.frame or matrix class, must have two columns and n number of rows.  The categories must be in the first column with the frequencies in the second column.  Row names should never be placed in this table (the default row names should always be 1:n).  Column names can be any character string.  The only symbols accepted for censored data are listed below.  Note, less than or equal to (<= and LE) is not equivalent to less than (< and L) and greater than or equal to (>=, +, and GE) is not equivalent to greater than (> and G). 
 
 
@@ -110,22 +110,22 @@ contingencytable<-matrix(c(.18, .13, .07, .19, .08, .05, .08, .12, .10), nrow = 
   colnames(contingencytable)<-c(NA,"<=19","20-30",">=31", NA)
 ```
 
-  NA | <20 | 20-30 | >30 | NA 
+  NA | <=19 | 20-30 | >=31 | NA 
  -----|------|-------|------|-----
-  <5 | 0.18 |0.19 | 0.09 | 0.46
-  5-9 | 0.13 |0.08 | 0.12 | 0.33
-  10+ | 0.06 |0.05 | 0.10 | 0.21
-  NA | 0.37 |0.32 | 0.31 | 1.00 
+  <5 | 0.18 |0.19 | 0.08 | 0.45
+  5I9 | 0.13 |0.08 | 0.12 | 0.33
+  >9 | 0.07 |0.05 | 0.10 | 0.22
+  NA | 0.38 |0.32 | 0.30 | 1.00 
 
 
-###quasipoisson_phi
+### quasipoisson_phi
 In a Poisson distribution, the variance equals the mean.  To combat overdispersion, this function considers the option where the variance is proportional to the mean by a scalar value of phi.  This changes Poisson to Quasi-Poisson.  
 
 * If phi = 1, the variance equals the mean and the original Poisson mean-variance relationship holds.
 * Overdispersion in data refers to when the variance is larger than the mean.  To accommodate this issue, set phi > 1. 
 * Underdispersion in data refers to when the variance is smaller than the mean.  However, underdispersion is a more rare case and is not accommodated for in this package.
 
-###Bounds
+### Bounds
 The upper bound in estimating_lambda represents a right-truncated point for the table.  Values that exceed the upper bound are assumed to have very small probabilities worth refining to zero, and thus these values are omitted in calculating the fitted Poisson (phi = 1) or Quasi-Poisson (phi > 1) truncated distribution.  Typically, setting the upper bound value between +10 and +20 of the last categorical value is sufficient.  
 
 Ideally, the four bounds for rec should be chosen based off prior knowledge and expert elicitation, but they can also be selected intuitively with a brute force method.  If rec outputs a final contingency table with higher probabilities near the edge(s) of the table, then it would make sense to increase the range of the bound(s).  For both the X and Y variables, this would just involve making the lower bound less, making the upper bound more, or doing a combination of the two.  The opposite holds true as well.  If the final contingency table has very low probabilities near the edge(s) of the table, then a user should decrease the range of the particular bound(s).
@@ -140,7 +140,6 @@ A Nepal Living Standards Survey [1] provides a censored table and average for ur
 # result = 4.37
 estimated_lambda(censoredtable = univariatetable.csv, 
   upperbound = 15, quasipoisson_phi = 1)
-
 ```
 
 ### Indonesia
