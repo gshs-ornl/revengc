@@ -1,7 +1,7 @@
 Package: revengc
 Type: Package
-Title: Reverse Engineering Censored, Decoupled Residential Data for Population Density Estimation
-Version: 1.0.0
+Title: Reverse Engineering Decoupled and Censored Data
+Version: 1.0.1
 Authors@R: c(
   person("Samantha", "Duchscherer", email = "sam.duchscherer@gmail.com", role = c("aut", "cre")),
   person("UT-Battelle, LLC", role = "cph")
@@ -9,12 +9,16 @@ Authors@R: c(
 Author: Samantha Duchscherer [aut, cre],
   UT-Battelle, LLC [cph]
 Maintainer: Samantha Duchscherer <sam.duchscherer@gmail.com>
-Description: A wealth of open source information is available that points to building usage including floor area of building size and likely occupancy. In the case of residential structures, census data provides a number of attributes including two values important to interior density estimation: household size (hhs) and area. If a national census revealed the raw data or provided a full uncensored contingency table (hhs x area), computing interior density as people/area would be straightforward. However, agencies rarely report this contingency table. Rather hhs and area are often decoupled and reported as separate univariate frequency tables, average values, or a combination of the two. In addition, the decoupled or contingency tables provided are typically left (<, <=), right (>, >=), and interval (-) censored. This type of information becomes problematic in estimating interior residential occupancy for numerous reasons. How can the people/area ratio be calculated when no affiliation between the variables exist? If a census reports a hhs average of 5.3, then how many houses are there with 1 person, 2 people,..., 10 people? If a census reports that there are 100 houses in an area of 26-50 square meters, then how many houses are in 26, 27,..., 50 square meters? The challenge therefore is to infer the people/area ratio when given decoupled and summarized data. The statistical package 'revengc' was designed to reverse engineer censored, decoupled census data into a likely hhs x area uncensored contingency table for estimating interior residential occupancy.
+Description: An issue occurs when authors may have privy too but normally do not reveal clear information.  Decoupled variables (e.g. separate averages) and numeric censoring (e.g. between ages 10-15) are reoccurring instances found in areas ranging from demographic and epidemiological data to ecological inference problems.  Decoupled variables provide no availability for cross tabulations while censoring obscures the true underlying values.  The revengc R package was developed to reverse engineer this unclear information that is continually reported by many well-established organizations (e.g. World Health Organization (WHO), Centers for Disease Control and Prevention (CDC), World Bank, and various national censuses).  There are two main functions in revengc and both fit data to a Poisson or Quasi-Poisson distribution.  The estimated_lambda function takes a univariate censored frequency table and approximates its lambda (average) value.  The rec function calculates an uncensored bivariate table from decoupled and summarized arguments.
 URL: https://github.com/GIST-ORNL/revengc
-Depends: R (>= 2.14)
+Depends: R (>= 3.1.2)
 License: MIT + file LICENSE
 LazyData: TRUE
-Imports: stringr
+Imports: stringr, mipfp, dplyr
 Suggests: R.rsp
 VignetteBuilder: R.rsp
 RoxygenNote: 6.0.1.9000
+
+
+
+
