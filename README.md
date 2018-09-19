@@ -56,7 +56,7 @@ rec(X, Y, Xlowerbound, Xupperbound, Ylowerbound, Yupperbound,
 
 
 ## Table format
-The univariate frequency table, which can be a data.frame or matrix class, must have two columns and n number of rows.  The categories must be in the first column with the frequencies in the second column.  Row names should never be placed in this table (the default row names should always be 1:n).  Column names can be any character string.  The only symbols accepted for censored data are listed below.  Note, less than or equal to (<= and LE) is not equivalent to less than (< and L) and greater than or equal to (>=, +, and GE) is not equivalent to greater than (> and G).  Also, calculations use closed intervals.    
+The univariate frequency table, which can be a data.frame or matrix class, must have two columns and n number of rows.  The categories must be in the first column with either probabilities or frequencies in the second column.  Row names should never be placed in this table (the default row names should always be 1:n).  Column names can be any character string.  The only symbols accepted for censored data are listed below.  Note, less than or equal to (<= and LE) is not equivalent to less than (< and L) and greater than or equal to (>=, +, and GE) is not equivalent to greater than (> and G).  Also, calculations use closed intervals.    
 
 
 * left censoring: <, L, <=, LE
@@ -77,7 +77,7 @@ univariatetable<-cbind(as.character(c("<=6", "7-12", "13-19", "20+")), c(11800,5
  20+ |3900
 
 
-The contingency table has restrictions.  The censored symbols should follow the requirements listed above.  The table's class can be a data.frame or a matrix.  The column names should be the Y category values. Row names should never be placed in this table, the default should always be 1:n.  The first column should be the X category values. The inside of the table are X * Y cross tabulation, which are either nonnegative if seed.estimation.method is "ipfp" or strictly positive when method is "ml", "lsq" or "chi2".  The row and column marginal totals corresponding to their X and Y category values need to be placed in this table. The top left, top right, and bottom left corners of the table should be NA or blank.  The bottom right corner can be a total cross tabulation sum value, NA, or blank. The formatted example below is made with the following code.
+The contingency table has restrictions.  The censored symbols should follow the requirements listed above.  The table's class can be a data.frame or a matrix.  The column names should be the Y category values. Row names should never be placed in this table, the default should always be 1:n.  The first column should be the X category values. The inside of the table are X * Y cross tabulation, which are either nonnegative probabilities or frequencies if seed.estimation.method is "ipfp" or strictly positive when method is "ml", "lsq" or "chi2".  The row and column marginal totals corresponding to their X and Y category values need to be placed in this table. The top left, top right, and bottom left corners of the table should be NA or blank.  The bottom right corner can be a total cross tabulation sum value, NA, or blank. The formatted example below is made with the following code.
 
 ```
 contingencytable<-matrix(c(18, 13, 7, 19, 8, 5, 8, 12, 10), nrow = 3, ncol = 3)
@@ -93,8 +93,8 @@ contingencytable<-matrix(c(18, 13, 7, 19, 8, 5, 8, 12, 10), nrow = 3, ncol = 3)
   NA | <=19 | 20-30 | >=31 | NA 
  -----|------|-------|------|-----
   <5 | 18 | 19 | 8 | 45
-  5I9 | 13 |08 | 12 | 33
-  G9 | 07 | 05 | 10 | 22
+  5I9 | 13 | 8 | 12 | 33
+  G9 | 7 | 5 | 10 | 22
   NA | 38 | 32 | 30 | 100 
 
 
@@ -186,7 +186,7 @@ final2<-rec(X= contingencytable.csv,
   Yupperbound = 310)
 
 # check that both data.frame results have same values
-all(final1 == final2$Probabilities)
+all(final1 == final2$Probability.Estimates)
 ```
 
 
