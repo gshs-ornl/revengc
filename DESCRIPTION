@@ -1,7 +1,7 @@
 Package: revengc
 Type: Package
-Title: Reverse Engineering Decoupled and Censored Data
-Version: 1.0.2
+Title: revengc: An R package to reverse engineer summarized data
+Version: 1.0.3
 Authors@R: c(
   person("Samantha", "Duchscherer", email = "sam.duchscherer@gmail.com", role = c("aut", "cre")),
   person("UT-Battelle, LLC", role = "cph")
@@ -9,12 +9,12 @@ Authors@R: c(
 Author: Samantha Duchscherer [aut, cre],
   UT-Battelle, LLC [cph]
 Maintainer: Samantha Duchscherer <sam.duchscherer@gmail.com>
-Description: An issue occurs when authors do not reveal clear information.  Decoupled variables (e.g. separate averages) and numeric censoring (e.g. between ages 10-15) are reoccurring instances found in areas ranging from demographic and epidemiological data to ecological inference problems.  Decoupled variables provide no availability for cross tabulations while censoring obscures the true underlying values.  The revengc R package was developed to reverse engineer this unclear information that is continually reported by many well-established organizations (e.g. World Health Organization (WHO), Centers for Disease Control and Prevention (CDC), World Bank, and various national censuses).  There are two main functions in revengc and both fit data to a Poisson or Quasi-Poisson distribution.  The estimated_lambda function takes a univariate censored frequency table and approximates its lambda (average) value.  The rec function calculates an uncensored bivariate table from decoupled and summarized arguments.
+Description: Decoupled (e.g. separate averages) and censored (e.g. > 100 species) variables are continually reported by many well-established organizations (e.g. World Health Organization (WHO), Centers for Disease Control and Prevention (CDC), World Bank, and various national censuses).  The challenge therefore is to infer what the original data could have been given summarized information.  We present an R package that reverse engineers decoupled and/or censored count data with two main functions.  The cnbinom.pars function estimates the average and dispersion parameter of a censored univariate frequency table.  The rec function reverse engineers summarized data into an uncensored bivariate table of probabilities.
 URL: https://github.com/GIST-ORNL/revengc
 Depends: R (>= 3.1.2)
 License: MIT + file LICENSE
 LazyData: TRUE
-Imports: stringr, mipfp, dplyr
+Imports: stringr, mipfp, dplyr, truncdist
 Suggests: R.rsp
 VignetteBuilder: R.rsp
 RoxygenNote: 6.0.1.9000
