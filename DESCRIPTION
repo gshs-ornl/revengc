@@ -1,6 +1,6 @@
 Package: revengc
 Type: Package
-Title: revengc: An R package to reverse engineer summarized data
+Title: Reverse Engineering Summarized Data
 Version: 1.0.3
 Authors@R: c(
   person("Samantha", "Duchscherer", email = "sam.duchscherer@gmail.com", role = c("aut", "cre")),
