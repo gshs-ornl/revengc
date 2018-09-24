@@ -38,7 +38,7 @@ Oak Ridge National Laboratory, 1 Bethel Valley Road, Oak Ridge, TN 37831
 \maketitle
 
 \begin{abstract}
-Decoupled (e.g. separate averages) and censored (e.g. $>$ 100 species) variables are continually reported by many well-established organizations (e.g. World Health Organization (WHO), Centers for Disease Control and Prevention (CDC), World Bank, and various national censuses).  The challenge therefore is to infer what the original data could have been given summarized information.  We present an R package that reverse engineers censored and/or decoupled count data with two main functions.  The \textit{cnbinom.pars} function estimates the average and dispersion parameter of a censored univariate frequency table.  The \textit{rec} function reverse engineers summarized data into an uncensored bivariate table of probabilities.
+Decoupled (e.g. separate averages) and censored (e.g. $>$ 100 species) variables are continually reported by many well-established organizations (e.g. World Health Organization (WHO), Centers for Disease Control and Prevention (CDC), World Bank, and various national censuses).  The challenge therefore is to infer what the original data could have been given summarized information.  We present an R package that reverse engineers censored and/or decoupled count data with two main functions.  The \textit{cnbinom.pars()} function estimates the average and dispersion parameter of a censored univariate frequency table.  The \textit{rec()} function reverse engineers summarized data into an uncensored bivariate table of probabilities.
 \end{abstract}
 
 
@@ -48,20 +48,20 @@ The \textbf{revengc} R package was originally developed to help model building o
 A tool that approximates negative binomial parameters from a censored univariate frequency table as well as estimates interior cells of a contingency table governed by negative binomial and/or Poisson marginals can also be useful for other areas ranging from demographic and epidemiological data to ecological inference problems.  For example, population and community ecologist could unpack censored organism counts (e.g. $<$ 20 species).  Modeling life expectancy and mortality, which are two variables that are notorious for being summarized in an average and/or censored frequency table form, could also benefit from \textbf{revengc}.  Other summarized examples include the average number of births, the number of new disease cases (censored table), the number of mutations in a gene (censored table) or average mutation rate, etc.  We attempt to accommodate for various application of count data by offering five scenarios that can be reverse engineered:
 
 \begin{enumerate}
-\item \textit{cnbinom.pars} - An univariate frequency table estimates an average and dispersion parameter
-\item \textit{rec} - Decoupled averages estimates an uncensored contingency table of probabilities 
-\item \textit{rec} - Decoupled frequency tables estimates an uncensored contingency table of probabilities 
-\item \textit{rec} - An average and frequency table estimates an uncensored contingency table of probabilities 
-\item \textit{rec} - A censored contingency table estimates an uncensored contingency table of probabilities 
+\item \textit{cnbinom.pars()} - An univariate frequency table estimates an average and dispersion parameter
+\item \textit{rec()} - Decoupled averages estimates an uncensored contingency table of probabilities 
+\item \textit{rec()} - Decoupled frequency tables estimates an uncensored contingency table of probabilities 
+\item \textit{rec()} - An average and frequency table estimates an uncensored contingency table of probabilities 
+\item \textit{rec()} - A censored contingency table estimates an uncensored contingency table of probabilities 
 \end{enumerate}
 
 \par
 
-This paper proceeds with our reverse engineering methodology for the two main function: \textit{cnbinom.pars} and \textit{rec}.  We provide an in-depth analysis of how we implemented both the negative binomial and Poisson distribution as well as the \textbf{truncdist} and \textbf{mipfp} R package \cite{truncdist, mipfpciting}.  Since the \textbf{revengc} package has specific input requirements, we continue with an explanation of how to implement \textit{cnbinom.pars} and \textit{rec} with correctly formatted table(s).  We then provide coded examples that implements \textbf{revengc} on national census data (household size and area) and end with concluding remarks.  
+This paper proceeds with our reverse engineering methodology for the two main function: \textit{cnbinom.pars()} and \textit{rec()}.  We provide an in-depth analysis of how we implemented both the negative binomial and Poisson distribution as well as the \textbf{truncdist} and \textbf{mipfp} R package \cite{truncdist, mipfpciting}.  Since the \textbf{revengc} package has specific input requirements, we continue with an explanation of how to implement \textit{cnbinom.pars()} and \textit{rec()} with correctly formatted table(s).  We then provide coded examples that implements \textbf{revengc} on national census data (household size and area) and end with concluding remarks.  
 
 
-\section{The Methodology: \textit{cnbinom.pars}  }
-The methodology for the \textit{cnbinom.pars} function is relatively straightforward.  To estimate an average $\mu$ and dispersion \textit{r} parameter, a censored frequency table is fit to a negative binomial distribution using a maximum log-likelihood function customized to handle left ($<$, $\leq$), right ($>$, $\geq$, +), and interval (-) censored data.  To show an example, first recall the negative binomial distribution \( P(X = x| \mu, r) \) parameterized as a distribution of the number of failures \textit{X} before the \textit{r$^{th}$} success in independent trials (\ref{eq:1}).  With success probability \textit{p} in each trail, \textit{r} $\geq$ 0 and 0 $\leq$ \textit{p} $\leq$ 1 \cite{linden}.   
+\section{The Methodology: \textit{cnbinom.pars()}  }
+The methodology for the \textit{cnbinom.pars()} function is relatively straightforward.  To estimate an average $\mu$ and dispersion \textit{r} parameter, a censored frequency table is fit to a negative binomial distribution using a maximum log-likelihood function customized to handle left ($<$, $\leq$), right ($>$, $\geq$, +), and interval (-) censored data.  To show an example, first recall the negative binomial distribution \( P(X = x| \mu, r) \) parameterized as a distribution of the number of failures \textit{X} before the \textit{r$^{th}$} success in independent trials (\ref{eq:1}).  With success probability \textit{p} in each trail, \textit{r} $\geq$ 0 and 0 $\leq$ \textit{p} $\leq$ 1 \cite{linden}.   
 
 \begin{equation} \label{eq:1}
 \begin{aligned}
@@ -85,19 +85,19 @@ L\left(\mu, r|x\right)_{\log} = \\
 \end{equation}
 
 
-\section{The Methodology: \textit{rec}  }
+\section{The Methodology: \textit{rec()}  }
 
 \subsection{Overview}
-\textit{rec} is a statistical approach that estimates the probabilities of a 'true' contingency table given summarized information: two averages, two univariate frequency tables, a combination of an average and univariate frequency table, and a censored contingency table.  Figure \ref{figure:1} presents a methodology workflow.    
+\textit{rec()} is a statistical approach that estimates the probabilities of a 'true' contingency table given summarized information: two averages, two univariate frequency tables, a combination of an average and univariate frequency table, and a censored contingency table.  Figure \ref{figure:1} presents a methodology workflow.    
 
 \subsection{Negative Binomial and Poisson Distribution}
-When only an average is provided, we assume the average and variance are equal and rely on a Poisson distribution (i.e. the probability of observing \textit{x} events in a given interval is given by Equation \ref{eq:3}).  We understand that there are many cases where data has more variation than what is indicated by the Poisson distribution (i.e. overdispersion).  However, with limited data, the Poisson distribution is implemented due to its convenient property of having only one parameter, $\lambda$ = average.  For the cases with more data (i.e. univariate frequency table(s) or censored contingency table), we account for dispersion by relying on the more flexible negative binomial distribution (\ref{eq:1}).  Hence, in these cases, the \textit{cnbinom.pars} function estimates the optimal average $\mu$ and dispersion \textit{r} parameters.  
+When only an average is provided, we assume the average and variance are equal and rely on a Poisson distribution (i.e. the probability of observing \textit{x} events in a given interval is given by Equation \ref{eq:3}).  We understand that there are many cases where data has more variation than what is indicated by the Poisson distribution (i.e. overdispersion).  However, with limited data, the Poisson distribution is implemented due to its convenient property of having only one parameter, $\lambda$ = average.  For the cases with more data (i.e. univariate frequency table(s) or censored contingency table), we account for dispersion by relying on the more flexible negative binomial distribution (\ref{eq:1}).  Hence, in these cases, the \textit{cnbinom.pars()} function estimates the optimal average $\mu$ and dispersion \textit{r} parameters.  
 
 \begin{figure}[htbp]
 \begin{center}
   \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{workflow_overview}}
 \end{center}
-\caption{\textbf{Workflow of rec function.}} 
+\caption{\textbf{Workflow of rec() function.}} 
 \label{figure:1}
 \end{figure}
 
@@ -110,7 +110,7 @@ V(X) &= \lambda
 \end{equation}
 
 \subsection{truncdist R package}
-With the negative binomial ($\mu$ and \textit{r}) and/or Poisson ($\lambda$) parameters, \textit{rec} calculates truncated distributions to represent uncensored row (Xlowerbound:Xupperbound) and column (Ylowerbound:Yupperbound) margins.  Calculations use the \textbf{truncdist} R package \cite{truncdist}, and to provide a reference, Equation \ref{eq:4} gives the probability density function of a truncated X distribution over the interval \textit{(a,b]} (i.e. the negative binomial and/or Poisson probability density function is represented by \textit{g(}$\cdot$\textit{)} and their corresponding cumulative distribution function is denoted by \textit{G(}$\cdot$\textit{)}).  Note, truncated distributions are very practical in this context because the distributions (margins) are restricted to a desired row and column marginal length.    
+With the negative binomial ($\mu$ and \textit{r}) and/or Poisson ($\lambda$) parameters, \textit{rec()} calculates truncated distributions to represent uncensored row (Xlowerbound:Xupperbound) and column (Ylowerbound:Yupperbound) margins.  Calculations use the \textbf{truncdist} R package \cite{truncdist}, and to provide a reference, Equation \ref{eq:4} gives the probability density function of a truncated X distribution over the interval \textit{(a,b]} (i.e. the negative binomial and/or Poisson probability density function is represented by \textit{g(}$\cdot$\textit{)} and their corresponding cumulative distribution function is denoted by \textit{G(}$\cdot$\textit{)}).  Note, truncated distributions are very practical in this context because the distributions (margins) are restricted to a desired row and column marginal length.    
 
 \begin{equation}\label{eq:4}
  f_{X}(x)=\left\{
@@ -121,12 +121,12 @@ With the negative binomial ($\mu$ and \textit{r}) and/or Poisson ($\lambda$) par
 \end{equation}
 
 \par
-The \textit{(a,b]} interval needed for both X (row of contingency table) and Y (column of contingency table) can be selected intuitively or with a brute force method.  If \textit{rec} outputs a final contingency table with higher probabilities near the edge(s) of the table, then it would make sense to increase the range of the bound(s). For both variables, this would just involve making the lower bound less, making the upper bound more, or doing a combination of the two. The opposite holds true as well. If the final contingency table in \textit{rec} has very low probabilities near the edge(s) of the table, the range of the particular bound(s) should be decreased.  
+The \textit{(a,b]} interval needed for both X (row of contingency table) and Y (column of contingency table) can be selected intuitively or with a brute force method.  If \textit{rec()} outputs a final contingency table with higher probabilities near the edge(s) of the table, then it would make sense to increase the range of the bound(s). For both variables, this would just involve making the lower bound less, making the upper bound more, or doing a combination of the two. The opposite holds true as well. If the final contingency table in \textit{rec()} has very low probabilities near the edge(s) of the table, the range of the particular bound(s) should be decreased.  
 
 \subsection{mipfp R package}
 
 \par
-\textit{rec} utilizing the \textbf{mipfp} R package to create cross tabulation probability estimates.  As mentioned above, the row and column marginals are the uncensored truncated distributions.  However, an opportunity for sensitivity analysis is presented by allowing an arbitrary seed estimation method and seed matrix.  Focusing on the seed estimation methods first, \textbf{mipfp} provides four algorithms (Table \ref{table:1}).  Essentially, all methods adjust cell proportions \( p_{xy} \) in a X $*$ Y contingency table to known marginal probabilities \( \pi_{x+} \) and \( \pi_{+y} \) (i.e. all interior cell estimates \( \hat{\pi}_{xy} \) are subject to marginal constraints (\ref{eq:5})).  For a better understanding, please refer the papers by \cite{little} and \cite{suesse}.     
+\textit{rec()} utilizing the \textbf{mipfp} R package to create cross tabulation probability estimates.  As mentioned above, the row and column marginals are the uncensored truncated distributions.  However, an opportunity for sensitivity analysis is presented by allowing an arbitrary seed estimation method and seed matrix.  Focusing on the seed estimation methods first, \textbf{mipfp} provides four algorithms (Table \ref{table:1}).  Essentially, all methods adjust cell proportions \( p_{xy} \) in a X $*$ Y contingency table to known marginal probabilities \( \pi_{x+} \) and \( \pi_{+y} \) (i.e. all interior cell estimates \( \hat{\pi}_{xy} \) are subject to marginal constraints (\ref{eq:5})).  For a better understanding, please refer the papers by \cite{little} and \cite{suesse}.     
  
 \begin{equation}\label{eq:5}
 \begin{aligned}
@@ -170,14 +170,14 @@ Weighted least squares & lsq &
 \egroup
 \end{table}
 
-Now considering the arbitrary seed matrix, \textit{rec} provides reasonable defaults.  For the decoupled cases (two averages, two tables, or a combination of a table and average), the absence of additional information makes it difficult to say much about the joint distribution.  Therefore, \textit{rec} assumes independence between the variables, which is equivalent in making the X $*$ Y seed a matrix of ones (i.e. probability of this seed.matrix is 1 / sum(seed.matrix)).  When a censored contingency table is provided, independence does not have to be assumed and the interior cells can be weighted.  \textit{rec} creates the default seed matrix by first repeating probability cells, which corresponding to the censored contingency table, for the newly created and compatible uncensored cross tabulations. Each cell value \textit{j} of this new seed.matrix is then changed to a probability \( seed.matrix[j]/sum(seed.matrix) \).  To see the seed for this case, refer to the Example section (Indonesia).    
+Now considering the arbitrary seed matrix, \textit{rec()} provides reasonable defaults.  For the decoupled cases (two averages, two tables, or a combination of a table and average), the absence of additional information makes it difficult to say much about the joint distribution.  Therefore, \textit{rec()} assumes independence between the variables, which is equivalent in making the X $*$ Y seed a matrix of ones (i.e. probability of this seed.matrix is 1 / sum(seed.matrix)).  When a censored contingency table is provided, independence does not have to be assumed and the interior cells can be weighted.  \textit{rec()} creates the default seed matrix by first repeating probability cells, which corresponding to the censored contingency table, for the newly created and compatible uncensored cross tabulations. Each cell value \textit{j} of this new seed.matrix is then changed to a probability \( seed.matrix[j]/sum(seed.matrix) \).  To see the seed for this case, refer to the Example section (Indonesia).    
 
 
 
 \section{Usage}
 
-\subsection{cnbinom.pars}
-The \textit{cnbinom.pars} function has the following format with a description of the argument directly below.  The output is a list consisting of an estimated average (mu) and dispersion (r) parameter.  
+\subsection{cnbinom.pars()}
+The \textit{cnbinom.pars()} function has the following format with a description of the argument directly below.  The output is a list consisting of an estimated average (mu) and dispersion (r) parameter.  
 
 \begin{verbatim}
 cnbinom.pars(censoredtable)
@@ -188,8 +188,8 @@ cnbinom.pars(censoredtable)
 \textit{censoredtable}: A frequency table (censored and/or uncensored).  A data.frame and matrix are acceptable classes.  See \textbf{Data entry} section for formatting.
 \\ 
 
-\subsection{rec}
-The \textit{rec} function has the following format with a description of each argument directly below.  The output is a list containing an uncensored contingency table of probabilities (rows range from Xlowerbound:Xupperbound and the columns range from Ylowerbound:Yupperbound) as well as the row and column parameters used in making the margins for the \textbf{mipfp} R package. 
+\subsection{rec()}
+The \textit{rec()} function has the following format with a description of each argument directly below.  The output is a list containing an uncensored contingency table of probabilities (rows range from Xlowerbound:Xupperbound and the columns range from Ylowerbound:Yupperbound) as well as the row and column parameters used in making the margins for the \textbf{mipfp} R package. 
 
 \begin{verbatim}
 rec(X, Y, Xlowerbound, Xupperbound, Ylowerbound, Yupperbound, 
@@ -215,7 +215,7 @@ rec(X, Y, Xlowerbound, Xupperbound, Ylowerbound, Yupperbound,
 \textit{seed.estimation.method}: A character string indicating which method is used for updating the seed.matrix. The choices are: "ipfp", "ml", "chi2", or "lsq". Default is "ipfp".  
 
 \section{Data entry}
-The input tables are formatted to accommodate most open source data.  The univariate frequency table used in \textit{cnbinom.pars} and/or \textit{rec} needs to be a data.frame or matrix class with two columns and n rows.  The categories must be in the first column with the frequencies or probabilities in the second column.  Row names should never be placed in this table (the default row names should always be 1:n).  Column names can be any character string.  The only symbols accepted for censored data are listed below.  Note, less than or equal to ($\leq$ and LE) is not equivalent to less than ($<$ and L) and greater than or equal to ($\geq$, +, and GE) is not equivalent to greater than ($>$ and G).  Also, \textbf{revengc} uses closed intervals.  
+The input tables are formatted to accommodate most open source data.  The univariate frequency table used in \textit{cnbinom.pars()} and/or \textit{rec()} needs to be a data.frame or matrix class with two columns and n rows.  The categories must be in the first column with the frequencies or probabilities in the second column.  Row names should never be placed in this table (the default row names should always be 1:n).  Column names can be any character string.  The only symbols accepted for censored data are listed below.  Note, less than or equal to ($\leq$ and LE) is not equivalent to less than ($<$ and L) and greater than or equal to ($\geq$, +, and GE) is not equivalent to greater than ($>$ and G).  Also, \textbf{revengc} uses closed intervals.  
 \\ \\
 \begin{itemize}
 \item \textbf{Left censored symbols:} $<$, $\leq$, L, and LE\\
@@ -225,7 +225,7 @@ The input tables are formatted to accommodate most open source data.  The univar
 \end{itemize}
 \par
 
-To provide examples, the three tables below use different censored symbols yet give the same \textit{cnbinom.pars} output ~\ref{table:2}. 
+To provide examples, the three tables below use different censored symbols yet give the same \textit{cnbinom.pars()} output ~\ref{table:2}. 
 
 \begin{table}[htbp]
 \begin{center}
@@ -281,7 +281,7 @@ $\geq$ 20& 3900 \\
 \end{table}
 
 \par
-The censored contingency table for \textit{rec} has a similar format.  The censored symbols should follow the requirements listed above.  The table's class can be a data.frame or a matrix.  The column names should be the Y category values. The first column should be the X category values and the row names can be arbitrary.  The inside of the table are X $*$ Y frequencies, which are either non-negative frequencies or probabilities if seed.estimation.method is "ipfp" or strictly positive when method is "ml", "lsq" or "chi2". The row and column marginal totals corresponding to their X and Y category values need to be placed in this table. The top left, top right, and bottom left corners of the table should be NA or blank.  The bottom right corner can be a total cross tabulation sum value, NA, or blank. Table ~\ref{table:3} is a formatted example.  
+The censored contingency table for \textit{rec()} has a similar format.  The censored symbols should follow the requirements listed above.  The table's class can be a data.frame or a matrix.  The column names should be the Y category values. The first column should be the X category values and the row names can be arbitrary.  The inside of the table are X $*$ Y frequencies, which are either non-negative frequencies or probabilities if seed.estimation.method is "ipfp" or strictly positive when method is "ml", "lsq" or "chi2". The row and column marginal totals corresponding to their X and Y category values need to be placed in this table. The top left, top right, and bottom left corners of the table should be NA or blank.  The bottom right corner can be a total cross tabulation sum value, NA, or blank. Table ~\ref{table:3} is a formatted example.  
 
 \begin{table}[htbp]
 \begin{center}
@@ -345,7 +345,7 @@ colnames(contingencytable)<-c(NA,"<20","20-29","30-39","40-49","50-69","70-99",
 \section{Worked examples}
 
 \subsection {Nepal}
-A Nepal Living Standards Survey \cite{nepal} provides both a censored table and average for urban household size.  We use the censored table to show that the \textit{cnbinom.pars} function calculates a close approximation to the provided average household size (4.4 people).  Note, there is overdispersion in the data.   
+A Nepal Living Standards Survey \cite{nepal} provides both a censored table and average for urban household size.  We use the censored table to show that the \textit{cnbinom.pars()} function calculates a close approximation to the provided average household size (4.4 people).  Note, there is overdispersion in the data.   
 
 \begin{verbatim}
 # revengc has the Nepal household table preloaded as univariatetable.csv   
@@ -354,7 +354,7 @@ cnbinom.pars(censoredtable = univariatetable.csv)
 
 
 \subsection{Indonesia}
-In 2010, the Population Census Data - Statistics Indonesia provided over 60 censored contingency tables containing Floor Area of Dwelling Unit (square meter) by Household Member Size. The tables are separated by province, urban, and rural.  Here we use the household size by area contingency table for Indonesia's rural Aceh Province to show the multiple coding steps and functions implemented inside \textit{rec}.  This allows the user to see a methodology workflow in code form.  The final uncensored household size by area estimated probability table, which implemented the `ipfp` seed estimation method and default seed matrix, has rows ranging from 1 (Xlowerbound) to 15 (Xupperbound) people and columns ranging from 10 (Ylowerbound) to 310 (Yupperbound) square meters.   
+In 2010, the Population Census Data - Statistics Indonesia provided over 60 censored contingency tables containing Floor Area of Dwelling Unit (square meter) by Household Member Size. The tables are separated by province, urban, and rural.  Here we use the household size by area contingency table for Indonesia's rural Aceh Province to show the multiple coding steps and functions implemented inside \textit{rec()}.  This allows the user to see a methodology workflow in code form.  The final uncensored household size by area estimated probability table, which implemented the `ipfp` seed estimation method and default seed matrix, has rows ranging from 1 (Xlowerbound) to 15 (Xupperbound) people and columns ranging from 10 (Ylowerbound) to 310 (Yupperbound) square meters.   
 
 \begin{verbatim}
 # data = Indonesia 's rural Aceh Province censored contingency table
@@ -391,7 +391,7 @@ uncensored.column.margin<-dtrunc(colrange, mu=y$Average, size = y$Dispersion,
 sum(uncensored.row.margin)
 sum(uncensored.column.margin)
 
-# create seed of probabilities (rec default)
+# create seed of probabilities (rec() default)
 seed.output<-seedmatrix(contingencytable.csv, Xlowerbound, 
   Xupperbound, Ylowerbound, Yupperbound)$Probabilities
 
@@ -418,9 +418,9 @@ final1<-reweight.contingencytable(observed.table = contingencytable.csv,
 # final results are probabilities
 sum(final1)
 
-# rec function outputs the same table
-# default of rec seed.estimation.method is ipfp
-# default of rec seed.matrix is the output of seedmatrix()$Probabilities 
+# rec() function outputs the same table
+# default of rec() seed.estimation.method is ipfp
+# default of rec() seed.matrix is the output of seedmatrix()$Probabilities 
 final2<-rec(X= contingencytable.csv,
   Xlowerbound = 1,
   Xupperbound = 15,
@@ -432,7 +432,7 @@ all(final1 == final2$Probability.Estimates)
 \end{verbatim}
 
 \section{Conclusion}
-\textbf{revengc} was designed to reverse engineer summarized and decoupled variables with two main functions: \textit{cnbinom.pars} and \textit{rec}.  Relying on a negative binomial distribution, \textit{cnbinom.pars} approximates the average and dispersion parameter of a censored univariate frequency table.  \textit{rec} fills in missing interior cell values from observed aggregated data (i.e. decouples average(s) and/or censored frequency table(s) or a censored contingency table).  There are some required assumptions in \textit{rec}.  For instance, \textit{rec} relies on a Poisson distribution when only an average is provided, which is assuming the variance and average are equal.  More descriptive input variables, such as univariate tables or contingency tables, can account for dispersion found in data.  However, independence between decoupled variables still has to be assumed when there is no external information about the joint distribution.  For these reasons, \textbf{rec} provides two options for sensitivity analysis: the seed matrix and the method used in updating the seed matrix are both arbitrary inputs.
+\textbf{revengc} was designed to reverse engineer summarized and decoupled variables with two main functions: \textit{cnbinom.pars()} and \textit{rec()}.  Relying on a negative binomial distribution, \textit{cnbinom.pars()} approximates the average and dispersion parameter of a censored univariate frequency table.  \textit{rec()} fills in missing interior cell values from observed aggregated data (i.e. decouples average(s) and/or censored frequency table(s) or a censored contingency table).  There are some required assumptions in \textit{rec()}.  For instance, \textit{rec()} relies on a Poisson distribution when only an average is provided, which is assuming the variance and average are equal.  More descriptive input variables, such as univariate tables or contingency tables, can account for dispersion found in data.  However, independence between decoupled variables still has to be assumed when there is no external information about the joint distribution.  For these reasons, \textbf{rec()} provides two options for sensitivity analysis: the seed matrix and the method used in updating the seed matrix are both arbitrary inputs.
 
 \newpage
 

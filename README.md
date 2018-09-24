@@ -1,7 +1,7 @@
 
 # revengc: An R package to reverse engineer decoupled and censored data
 
-Decoupled (e.g. separate averages) and censored (e.g. > 100 species) variables are continually reported by many well-established organizations (e.g. World Health Organization (WHO), Centers for Disease Control and Prevention (CDC), World Bank, and various national censuses).  The challenge therefore is to infer what the original data could have been given summarized information.  We present an R package that reverse engineers decoupled and/or censored data with two main functions.  The cnbinom.pars function estimates the average and dispersion parameter of a censored univariate frequency table.  The rec function reverse engineers summarized data into an uncensored bivariate table of probabilities.
+Decoupled (e.g. separate averages) and censored (e.g. > 100 species) variables are continually reported by many well-established organizations (e.g. World Health Organization (WHO), Centers for Disease Control and Prevention (CDC), World Bank, and various national censuses).  The challenge therefore is to infer what the original data could have been given summarized information.  We present an R package that reverse engineers decoupled and/or censored data with two main functions.  The cnbinom.pars() function estimates the average and dispersion parameter of a censored univariate frequency table.  The rec() function reverse engineers summarized data into an uncensored bivariate table of probabilities.
 
 **It is highly recommended for a user to read the vignettes for more information about the methodology of both functions.**     
         
@@ -56,7 +56,7 @@ rec(X, Y, Xlowerbound, Xupperbound, Ylowerbound, Yupperbound,
 
 
 ## Table format
-The univariate frequency table, which can be a data.frame or matrix class, must have two columns and n number of rows.  The categories must be in the first column with either probabilities or frequencies in the second column.  Row names should never be placed in this table (the default row names should always be 1:n).  Column names can be any character string.  The only symbols accepted for censored data are listed below.  Note, less than or equal to (<= and LE) is not equivalent to less than (< and L) and greater than or equal to (>=, +, and GE) is not equivalent to greater than (> and G).  Also, calculations use closed intervals.    
+The univariate frequency table, which can be a data.frame or matrix class, must have two columns and n number of rows.  The categories must be in the first column with the frequencies or probabilities in the second column.  Row names should never be placed in this table (the default row names should always be 1:n).  Column names can be any character string.  The only symbols accepted for censored data are listed below.  Note, less than or equal to (<= and LE) is not equivalent to less than (< and L) and greater than or equal to (>=, +, and GE) is not equivalent to greater than (> and G).  Also, calculations use closed intervals.    
 
 
 * left censoring: <, L, <=, LE
@@ -77,7 +77,7 @@ univariatetable<-cbind(as.character(c("<=6", "7-12", "13-19", "20+")), c(11800,5
  20+ |3900
 
 
-The contingency table has restrictions.  The censored symbols should follow the requirements listed above.  The table's class can be a data.frame or a matrix.  The column names should be the Y category values. Row names should never be placed in this table, the default should always be 1:n.  The first column should be the X category values. The inside of the table are X * Y cross tabulation, which are either nonnegative probabilities or frequencies if seed.estimation.method is "ipfp" or strictly positive when method is "ml", "lsq" or "chi2".  The row and column marginal totals corresponding to their X and Y category values need to be placed in this table. The top left, top right, and bottom left corners of the table should be NA or blank.  The bottom right corner can be a total cross tabulation sum value, NA, or blank. The formatted example below is made with the following code.
+The contingency table has restrictions.  The censored symbols should follow the requirements listed above.  The table's class can be a data.frame or a matrix.  The column names should be the Y category values. Row names should never be placed in this table, the default should always be 1:n.  The first column should be the X category values. The inside of the table are X * Y cross tabulation, which are either nonnegative frequencies or probabilities if seed.estimation.method is "ipfp" or strictly positive when method is "ml", "lsq" or "chi2".  The row and column marginal totals corresponding to their X and Y category values need to be placed in this table. The top left, top right, and bottom left corners of the table should be NA or blank.  The bottom right corner can be a total cross tabulation sum value, NA, or blank. The formatted example below is made with the following code.
 
 ```
 contingencytable<-matrix(c(18, 13, 7, 19, 8, 5, 8, 12, 10), nrow = 3, ncol = 3)
@@ -102,7 +102,7 @@ contingencytable<-matrix(c(18, 13, 7, 19, 8, 5, 8, 12, 10), nrow = 3, ncol = 3)
 ## Examples of Applying functions to Census Data
 
 ### Nepal
-A Nepal Living Standards Survey [1] provides a censored table and average for urban household size. Using the censored table, the cnbinom.pars function calculates a close approximation to the provided average household size (4.4 people).
+A Nepal Living Standards Survey [1] provides a censored table and average for urban household size. Using the censored table, the cnbinom.pars() function calculates a close approximation to the provided average household size (4.4 people).
 
 ```
 # revengc has the Nepal houshold table preloaded as univariatetable.csv   
@@ -110,7 +110,7 @@ cnbinom.pars(censoredtable = univariatetable.csv)
 ```
 
 ### Indonesia
-In 2010, the Population Census Data - Statistics Indonesia provided over 60 censored contingency tables containing Floor Area of Dwelling Unit (square meter) by Household Member Size. The tables are separated by province, urban, and rural.  Here we use the household size by area contingency table for Indonesia's rural Aceh Province to show the multiple coding steps and functions implemented inside rec.  This allows the user to see a methodology workflow in code form.  The final uncensored household size by area estimated probability table, which implemented the "ipfp" method and default seed matrix, has rows ranging from 1 (Xlowerbound) to 15 (Xupperbound) people and columns ranging from 10 (Ylowerbound) to 310 (Yupperbound) square meters. 
+In 2010, the Population Census Data - Statistics Indonesia provided over 60 censored contingency tables containing Floor Area of Dwelling Unit (square meter) by Household Member Size. The tables are separated by province, urban, and rural.  Here we use the household size by area contingency table for Indonesia's rural Aceh Province to show the multiple coding steps and functions implemented inside rec().  This allows the user to see a methodology workflow in code form.  The final uncensored household size by area estimated probability table, which implemented the "ipfp" method and default seed matrix, has rows ranging from 1 (Xlowerbound) to 15 (Xupperbound) people and columns ranging from 10 (Ylowerbound) to 310 (Yupperbound) square meters. 
 
 
 
@@ -186,7 +186,7 @@ final2<-rec(X= contingencytable.csv,
   Yupperbound = 310)
 
 # check that both data.frame results have same values
-all(final1 == final2$Probability.Estimates)
+all(final1 == final2$Probabilities)
 ```
 
 
