@@ -1,7 +1,7 @@
 
 # revengc: An R package to reverse engineer decoupled and censored data
 
-Decoupled (e.g. separate averages) and censored (e.g. > 100 species) variables are continually reported by many well-established organizations (e.g. World Health Organization (WHO), Centers for Disease Control and Prevention (CDC), World Bank, and various national censuses).  The challenge therefore is to infer what the original data could have been given summarized information.  We present an R package that reverse engineers decoupled and/or censored data with two main functions.  The cnbinom.pars() function estimates the average and dispersion parameter of a censored univariate frequency table.  The rec() function reverse engineers summarized data into an uncensored bivariate table of probabilities.
+Decoupled (e.g. separate averages) and censored (e.g. > 100 species) variables are continually reported by many well-established organizations, such as the World Health Organization (WHO), Centers for Disease Control and Prevention (CDC), and World Bank.  The challenge therefore is to infer what the original data could have been given summarized information.  We present an R package that reverse engineers censored and/or decoupled data with two main functions.  The cnbinom.pars() function estimates the average and dispersion parameter of a censored univariate frequency table.  The rec() function reverse engineers summarized data into an uncensored bivariate table of probabilities.
 
 **It is highly recommended for a user to read the vignettes for more information about the methodology of both functions.**     
         
@@ -42,7 +42,7 @@ rec(X, Y, Xlowerbound, Xupperbound, Ylowerbound, Yupperbound,
 
 * **Y** - Same description as X but this argument is for the Y variable.  X defaults to NULL if Y argument is a censored contingency table.
 
-* **Xlowerbound** - A numeric class value to represent the left bound for X (row in contingency table).  The value must strictly be a non-negative integer and cannot be greater than the lowest category/average value provided for X (e.g. the lower bound cannot be 6 if a table has '>= 5' as a X or row category). 
+* **Xlowerbound** - A numeric class value to represent the left bound for X (row in contingency table).  The value must strictly be a non-negative integer and cannot be greater than the lowest category/average value provided for X (e.g. the lower bound cannot be 6 if a table has '<= 5' as a X or row category). 
 
 * **Xupperbound** - A numeric class value to represent the right bound for X (row in contingency table).  The value must strictly be a non-negative integer and cannot be less than the highest category/average value provided for X (e.g. the upper bound cannot be 90 if a table has '> 100' as a X or row category).
 
@@ -50,7 +50,7 @@ rec(X, Y, Xlowerbound, Xupperbound, Ylowerbound, Yupperbound,
 
 * **Yupperbound** - Same description as Xupperbound but this argument is for Y (column in contingency table). 
 
-* **seed.matrix** - An intial probability matrix to be updated.  If decoupled variables is provided the default is a Xlowerbound:Xupperbound by Ylowerbound:Yupperbound seed.matrix with interior cells of 1 / sum(seed.matrix).  If a censored contingency table is provided the default is the seedmatrix()$Probabilities output.
+* **seed.matrix** - An initial probability matrix to be updated.  If decoupled variables is provided the default is a Xlowerbound:Xupperbound by Ylowerbound:Yupperbound matrix with interior cells of 1, which are then converted to probabilities.  If a censored contingency table is provided the default is the seedmatrix()\$Probabilities output.
 
 * **seed.estimation.method** - A character string indicating which method is used for updating the seed.matrix. The choices are: "ipfp", "ml", "chi2", or "lsq". Default is "ipfp".  
 
@@ -80,14 +80,14 @@ univariatetable<-cbind(as.character(c("<=6", "7-12", "13-19", "20+")), c(11800,5
 The contingency table has restrictions.  The censored symbols should follow the requirements listed above.  The table's class can be a data.frame or a matrix.  The column names should be the Y category values. Row names should never be placed in this table, the default should always be 1:n.  The first column should be the X category values. The inside of the table are X * Y cross tabulation, which are either nonnegative frequencies or probabilities if seed.estimation.method is "ipfp" or strictly positive when method is "ml", "lsq" or "chi2".  The row and column marginal totals corresponding to their X and Y category values need to be placed in this table. The top left, top right, and bottom left corners of the table should be NA or blank.  The bottom right corner can be a total cross tabulation sum value, NA, or blank. The formatted example below is made with the following code.
 
 ```
-contingencytable<-matrix(c(18, 13, 7, 19, 8, 5, 8, 12, 10), nrow = 3, ncol = 3)
-  rowmarginal<-apply(contingencytable,1,sum)
-  contingencytable<-cbind(contingencytable, rowmarginal)
-  colmarginal<-apply(contingencytable,2,sum)
-  contingencytable<-rbind(contingencytable, colmarginal)
-  row.names(contingencytable)[row.names(contingencytable)=="colmarginal"]<-""
-  contingencytable<-data.frame(c("<5", "5I9", "G9", NA), contingencytable)
-  colnames(contingencytable)<-c(NA,"<=19","20-30",">=31", NA)
+contingencytable <- matrix(c(18, 13, 7, 19, 8, 5, 8, 12, 10), nrow = 3, ncol = 3)
+  rowmarginal <- apply(contingencytable,1,sum)
+  contingencytable <- cbind(contingencytable, rowmarginal)
+  colmarginal <- apply(contingencytable,2,sum)
+  contingencytable <- rbind(contingencytable, colmarginal)
+  row.names(contingencytable)[row.names(contingencytable) == "colmarginal"] <- ""
+  contingencytable <- data.frame(c("<5", "5I9", "G9", NA), contingencytable)
+  colnames(contingencytable) <- c(NA,"<=19", "20-30", ">=31", NA)
 ```
 
   NA | <=19 | 20-30 | >=31 | NA 
@@ -115,33 +115,40 @@ In 2010, the Population Census Data - Statistics Indonesia provided over 60 cens
 
 
 ```
-# data = Indonesia 's rural Aceh Province censored contingency table
-# preloaded as 'contingencytable.csv'
+# Packages needed if doing workflow of rec() step by step
+library(stringr)
+library(dplyr)
+library(mipfp)
+library(truncdist)
+library(revengc) 
+
+# data = Indonesia's rural Aceh Province censored contingency table
+# preloaded in revengc as 'contingencytable.csv'
 contingencytable.csv 
 
 # provided upper and lower bound values for table
-# X=row and Y=column
-Xlowerbound=1
-Xupperbound=15
-Ylowerbound=10
-Yupperbound=310
+# X = row and Y = column
+Xlowerbound = 1
+Xupperbound = 15
+Ylowerbound = 10
+Yupperbound = 310
 
 # table of row marginals provides average and dispersion for x
-row.marginal.table<-row.marginal(contingencytable.csv)
-x<-cnbinom.pars(row.marginal.table)
+row.marginal.table <- row.marginal(contingencytable.csv)
+x <- cnbinom.pars(row.marginal.table)
 # table of column marginals provides average and dispersion for y
-column.marginal.table<-column.marginal(contingencytable.csv)
-y<-cnbinom.pars(column.marginal.table)
+column.marginal.table <- column.marginal(contingencytable.csv)
+y <- cnbinom.pars(column.marginal.table)
 
 # create uncensored row and column ranges   
-rowrange<-Xlowerbound:Xupperbound
-colrange<-Ylowerbound:Yupperbound
+rowrange <- Xlowerbound:Xupperbound
+colrange <- Ylowerbound:Yupperbound
 
 # new uncensored row marginal table = truncated negative binomial distribution
-uncensored.row.margin<-dtrunc(rowrange, mu=x$Average, size = x$Dispersion, 
+uncensored.row.margin <- dtrunc(rowrange, mu=x$Average, size = x$Dispersion, 
   a = Xlowerbound-1, b = Xupperbound, spec = "nbinom")
 # new uncensored column margin table = truncated negative binomial distribution
-uncensored.column.margin<-dtrunc(colrange, mu=y$Average, size = y$Dispersion,
+uncensored.column.margin <- dtrunc(colrange, mu=y$Average, size = y$Dispersion,
   a = Ylowerbound-1, b = Yupperbound, spec = "nbinom")
 
 # sum of truncated distributions equal 1
@@ -149,44 +156,45 @@ uncensored.column.margin<-dtrunc(colrange, mu=y$Average, size = y$Dispersion,
 sum(uncensored.row.margin)
 sum(uncensored.column.margin)
 
-# create seed of probabilities (rec default)
-seed.output<-seedmatrix(contingencytable.csv, Xlowerbound, 
+# create seed of probabilities (rec() default)
+seed.output <- seedmatrix(contingencytable.csv, Xlowerbound, 
   Xupperbound, Ylowerbound, Yupperbound)$Probabilities
 
 # run mipfp
 # store the new margins in a list
-tgt.data<-list(uncensored.row.margin, uncensored.column.margin)
+tgt.data <- list(uncensored.row.margin, uncensored.column.margin)
 # list of dimensions of each marginal constrain
-tgt.list<-list(1,2)
+tgt.list <- list(1,2)
 # calling the estimated function
 ## seed has to be in array format for mipfp package
 ## ipfp is the selected seed.estimation.method
-final1<-Estimate(array(seed.output,dim=c(length(Xlowerbound:Xupperbound), 
+final1 <- Estimate(array(seed.output, dim=c(length(Xlowerbound:Xupperbound), 
   length(Ylowerbound:Yupperbound))), tgt.list, tgt.data, method="ipfp")$x.hat
 
 # filling in names of updated seed  
-final1<-data.frame(final1)
-row.names(final1)<-Xlowerbound:Xupperbound
-names(final1)<-Ylowerbound:Yupperbound
+final1 <- data.frame(final1)
+row.names(final1) <- Xlowerbound:Xupperbound
+names(final1) <- Ylowerbound:Yupperbound
 
 # reweight estimates to known censored interior cells 
-final1<-reweight.contingencytable(observed.table = contingencytable.csv, 
+final1 <- reweight.contingencytable(observed.table = contingencytable.csv, 
   estimated.table = final1)
 
-# final result is probabilities
+# final results are probabilities
 sum(final1)
 
-# rec function outputs the same table
-# default of rec seed.estimation.method is ipfp
-# default of rec seed.matrix is the output of the seedmatrix() function
-final2<-rec(X= contingencytable.csv,
+# rec() function outputs the same table
+# default of rec() seed.estimation.method is ipfp
+# default of rec() seed.matrix is the output of seedmatrix()$Probabilities 
+final2<-rec(
+  X = contingencytable.csv,
   Xlowerbound = 1,
   Xupperbound = 15,
   Ylowerbound = 10,
   Yupperbound = 310)
 
-# check that both data.frame results have same values
-all(final1 == final2$Probabilities)
+# check that final1 and final2 have the same results
+all(final1 == final2$Probability.Estimates)
 ```
 
 
