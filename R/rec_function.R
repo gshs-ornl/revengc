@@ -6,6 +6,7 @@ source("R/cnbinom.pars_function.R")
 source("R/seedmatrix_function.R")
 source("R/reweight.contingencytable.R")
 source("R/reweight.univariatetable.R")
+source("R/format_data_for_functions.R")
 
 
  rec<-function (X = NULL, Y = NULL, Xlowerbound, Xupperbound, Ylowerbound, Yupperbound, 
@@ -191,8 +192,8 @@ source("R/reweight.univariatetable.R")
     if (colmu <= Ylowerbound) stop ('Check Y (column) inputs. Y average <= Ylowerbound.')
 
     # error if rowmu/colmu > bounds
-    if (rowmu >= Xupperbound) stop ('Check X (row) inputs. X average >= Xlowerbound.')
-    if (colmu >= Yupperbound) stop ('Check Y (column) inputs. Y average >= Ylowerbound.')
+    if (rowmu >= Xupperbound) stop ('Check X (row) inputs. X average >= Xupperbound.')
+    if (colmu >= Yupperbound) stop ('Check Y (column) inputs. Y average >= Yupperbound.')
       
 
     # both marginals == 1

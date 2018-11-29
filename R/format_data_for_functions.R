@@ -7,6 +7,7 @@ column.marginal<-function(contingencytable){
   if (any(na.omit(colnames(contingencytable))=="V1")) {cnames=contingencytable[1,]} else {cnames=colnames(contingencytable)}
   # remove commas from column name
   cnames<-str_replace_all(as.matrix(cnames),",","")
+  if(is.na(cnames[1])==FALSE){cnames[1]<-NA}
   cnames[cnames==" NA"] <- NA
   cnames[cnames=="NA "] <- NA
   cnames[cnames==""] <- NA

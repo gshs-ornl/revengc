@@ -256,7 +256,7 @@ if (length(repx$rightcensored1) != 0){
   
   # case E
   if (length(repx$nocensored) != 0){
-    for ( i in 1:nrow(repx$nocensored)){
+    for ( i in 1:ncol(repx$nocensored)){
     uncensored_chunk<-estimated.table[repx$nocensored[1,i]-minnumber+1]
     sum_uncensored_chunk<-sum(uncensored_chunk) 
     censoredvalue<-as.numeric(repx$nocensored[2,i])

@@ -616,6 +616,10 @@ sum_uncensored_chunk<-sum(uncensored_chunk)
 censoredvalue<-as.numeric(unique(out[[x]]$inside))
 
 reweighted<-(uncensored_chunk*censoredvalue)/sum_uncensored_chunk
+# replace 0/0 or nan with 0 
+is.nan.data.frame <- function(x)
+  do.call(cbind, lapply(x, is.nan))
+reweighted[is.nan.data.frame(reweighted)] = 0
 rewerightedfinal<-data.frame(expand.grid(unique(out[[x]]$Wantr), unique(out[[x]]$Wantc)),unlist(as.list(reweighted)))
 names(rewerightedfinal)<-c("Wantr", "Wantc", "inside")
 # print(cbind(x, sum(rewerightedfinal$inside)))
