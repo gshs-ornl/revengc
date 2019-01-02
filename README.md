@@ -3,7 +3,7 @@
 
 Decoupled (e.g. separate averages) and censored (e.g. > 100 species) variables are continually reported by many well-established organizations, such as the World Health Organization (WHO), Centers for Disease Control and Prevention (CDC), and World Bank.  The challenge therefore is to infer what the original data could have been given summarized information.  We present an R package that reverse engineers censored and/or decoupled data with two main functions.  The cnbinom.pars() function estimates the average and dispersion parameter of a censored univariate frequency table.  The rec() function reverse engineers summarized data into an uncensored bivariate table of probabilities.
 
-**It is highly recommended for a user to read the vignettes for more information about the methodology of both functions.  FIND THE PUBLICATION HERE:<https://journal.r-project.org/archive/2018/RJ-2018-044/index.html>**    
+**It is highly recommended for a user to read the vignettes for more information about the methodology of both functions.  THE R JOURNAL PUBLICATION: <https://journal.r-project.org/archive/2018/RJ-2018-044/index.html>**    
         
 ## Getting Started 
  
