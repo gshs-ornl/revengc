@@ -23,13 +23,16 @@ library(revengc)
 ## Usage
 `cnbinom.pars()` has the following format 
 ```
-cnbinom.pars(censoredtable)
+cnbinom.pars(censoredtable, mu0 = 100, r0 = 100, warn = -1, ...)
 ``` 
 
 where a description of the argument directly below 
 
 * **censoredtable** - A frequency table (censored and/or uncensored).  A data.frame and matrix are acceptable classes.  See Table format section below.
-
+* **mu0, r0** starting values for `mu` and `r` used by optim.
+* **warn** - Value used for `options(warn)` during `optim()` fitting. 
+  `-1` suppresses warnings
+* **...** - Additional arguments to be passed to `optim()`
 
 `rec()` has the following format where a description of each argument is found below 
  
