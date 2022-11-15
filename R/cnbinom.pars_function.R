@@ -3,7 +3,7 @@ library(stringr)
 # cnbinom.pars is a function that outputs mu and r from univariate censored table input 
 # assume negative binomial 
 
-cnbinom.pars<-function (censoredtable){
+cnbinom.pars<-function (censoredtable, mu0 = 100, r0 = 100, warn = -1, ...){
   
   
   # make probabilities if not already
@@ -283,11 +283,12 @@ findtypeofcensoring_univariatetable<-function (univariatefreqtable){
 
   # optimize mu and r in loglikelihood_univariatecase
   # hide warnings... 
-  options(warn=-1)
+    options(warn = warn)
+    
   fixdata_univariatecase_output=fixdata_univariatecase(censoredtable)
-  op<- optim(par=c(100,100),
+  op<- optim(par=c(mu0, r0),
              fn =loglikelihood_univariatecase, 
-             fixdata_univariatecase_output=fixdata_univariatecase_output)
+             fixdata_univariatecase_output=fixdata_univariatecase_output, ...)
   final<-op$par
   mu = final[1]
   r = final[2]
